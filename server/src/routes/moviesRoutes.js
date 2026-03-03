@@ -1,31 +1,35 @@
 import express from "express";
 import {
-  fetchTrendingMovies,
-  searchMoviesByQuery,
-  fetchTopRatedMovies,
-  fetchUpcomingMovies,
-  fetchDiscoverMovies,
-  fetchMovieProviders,
-} from "../services/tmdbServices.js";
+  getLatestMovies,
+  getTrendingMovies,
+  searchMovies,
+  getTopRatedMovies,
+  getUpcomingMovies,
+  getDiscoverMovies,
+  getMovieProviders,
+} from "../controllers/moviesController.js";
 
 const router = express.Router();
 
+// GET /api/movies/latest
+router.get("/latest", getLatestMovies);
+
 // GET /api/movies/trending
-router.get("/trending", fetchTrendingMovies);
+router.get("/trending", getTrendingMovies);
 
 // GET /api/movies/search?query=movieName
-router.get("/search", searchMoviesByQuery);
+router.get("/search", searchMovies);
 
 // GET /api/movies/top-rated
-router.get("/top-rated", fetchTopRatedMovies);
+router.get("/top-rated", getTopRatedMovies);
 
 // GET /api/movies/upcoming
-router.get("/upcoming", fetchUpcomingMovies);
+router.get("/upcoming", getUpcomingMovies);
 
 // GET /api/movies/discover
-router.get("/discover", fetchDiscoverMovies);
+router.get("/discover", getDiscoverMovies);
 
 // GET /api/movies/:id/providers
-router.get("/:id/providers", fetchMovieProviders);
+router.get("/:id/providers", getMovieProviders);
 
 export default router;

@@ -59,7 +59,7 @@ export const getUpcomingMovies = async (req, res) => {
   }
 };
 
-GET / api / movies / discover;
+// GET /api/movies/discover
 export const getDiscoverMovies = async (req, res) => {
   try {
     const movies = await fetchDiscoverMovies();
