@@ -1,3 +1,13 @@
+import {
+  fetchLatestMovies,
+  fetchTrendingMovies,
+  searchMoviesByQuery,
+  fetchTopRatedMovies,
+  fetchUpcomingMovies,
+  fetchDiscoverMovies,
+  fetchMovieProviders,
+} from "../services/tmdbServices.js";
+
 // GET /api/movies/latest
 export const getLatestMovies = async (req, res) => {
   try {
@@ -20,14 +30,14 @@ export const getTrendingMovies = async (req, res) => {
 
 // GET /api/movies/search?query=movieName
 export const searchMovies = async (req, res) => {
-    const query = req.query.query;
-    try {
-        const movies = await searchMoviesByQuery(query);
-        res.json(movies);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to search movies" });
-    }
-}
+  const query = req.query.query;
+  try {
+    const movies = await searchMoviesByQuery(query);
+    res.json(movies);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to search movies" });
+  }
+};
 
 // GET /api/movies/top-rated
 export const getTopRatedMovies = async (req, res) => {
@@ -49,15 +59,15 @@ export const getUpcomingMovies = async (req, res) => {
   }
 };
 
-// GET /api/movies/discover
-// export const getDiscoverMovies = async (req, res) => {
-//   try {
-//     const movies = await fetchDiscoverMovies();
-//     res.json(movies);
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to fetch discover movies" });
-//   }
-// };
+GET / api / movies / discover;
+export const getDiscoverMovies = async (req, res) => {
+  try {
+    const movies = await fetchDiscoverMovies();
+    res.json(movies);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch discover movies" });
+  }
+};
 
 // GET /api/movies/:id/providers
 export const getMovieProviders = async (req, res) => {
