@@ -1,7 +1,5 @@
 const TMDB_BASE_URL =
   process.env.TMDB_BASE_URL || "https://api.themoviedb.org/3";
-console.log("TMDB API KEY:", process.env.TMDB_API_KEY);
-console.log("TMDB BASE URL:", TMDB_BASE_URL);
 
 // latest movies
 export const fetchLatestMovies = async () => {

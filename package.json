@@ -1,5 +1,12 @@
 {
+  "name": "movue",
+  "version": "1.0.0",
   "dependencies": {
     "concurrently": "^9.2.1"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "npm start --prefix server",
+    "client": "npm run dev --prefix client"
   }
 }

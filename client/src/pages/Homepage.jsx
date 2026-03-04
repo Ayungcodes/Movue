@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import HeroSlider from "../components/HeroSlider";
 
 const Homepage = ({ openNav, toggleNav }) => {
   return (
@@ -7,12 +8,7 @@ const Homepage = ({ openNav, toggleNav }) => {
       <Navbar openNav={openNav} toggleNav={toggleNav} />
 
       {/* hero section */}
-      <section
-        className="hero-section h-screen flex items-center justify-center text-center px-4 text-white"
-        onClick={toggleNav}
-      >
-        {/* Discover Movies Like Never Before */}
-      </section>
+      <HeroSlider />
     </>
   );
 };
