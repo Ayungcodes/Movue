@@ -9,7 +9,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/movies", moviesRoutes)
-console.log(moviesRoutes);
 console.log("Movies routes loaded successfully");
 
 app.listen(PORT, () => {

@@ -1,3 +1,8 @@
+const TMDB_BASE_URL =
+  process.env.TMDB_BASE_URL || "https://api.themoviedb.org/3";
+console.log("TMDB API KEY:", process.env.TMDB_API_KEY);
+console.log("TMDB BASE URL:", TMDB_BASE_URL);
+
 // latest movies
 export const fetchLatestMovies = async () => {
   try {
@@ -6,6 +11,8 @@ export const fetchLatestMovies = async () => {
     );
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.log("TMDB RAW ERROR:", errorText);
       throw new Error(`TMDB Error: ${response.status} ${response.statusText}`);
     }
 
@@ -38,11 +45,11 @@ export const fetchTrendingMovies = async () => {
 
 // search movies by query
 export const searchMoviesByQuery = async (query) => {
-  try {
-    if (!query || query.trim() === "") {
-      return [];
-    }
+  if (!query || query.trim() === "") {
+    return [];
+  }
 
+  try {
     const params = new URLSearchParams({
       api_key: process.env.TMDB_API_KEY,
       query,
