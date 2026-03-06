@@ -1,10 +1,10 @@
 const TMDB_BASE_URL =
   process.env.TMDB_BASE_URL || "https://api.themoviedb.org/3";
 
-  // fetch videos
-  export const fetchMovieVideos = async (movieId) => {
+// fetch videos
+export const fetchMovieVideos = async (movieId) => {
   const response = await fetch(
-    `${TMDB_BASE_URL}/movie/${movieId}/videos?api_key=${process.env.TMDB_API_KEY}`
+    `${TMDB_BASE_URL}/movie/${movieId}/videos?api_key=${process.env.TMDB_API_KEY}`,
   );
 
   if (!response.ok) {
@@ -15,12 +15,31 @@ const TMDB_BASE_URL =
 
   // official trailer
   const trailer = data.results.find(
-    (vid) =>
-      vid.type === "Trailer" &&
-      vid.site === "YouTube"
+    (vid) => vid.type === "Trailer" && vid.site === "YouTube",
   );
 
   return trailer || null;
+};
+
+// featured movie
+export const fetchFeaturedMovie = async () => {
+  const params = new URLSearchParams({
+    api_key: process.env.TMDB_API_KEY,
+    sort_by: "popularity.desc",
+    "vote_average.gte": "7",
+    "vote_count.gte": "1000",
+    "primary_release_date.gte": "2020-01-01",
+  });
+
+  const response = await fetch(`${TMDB_BASE_URL}/discover/movie?${params}`);
+
+  if (!response.ok) {
+    throw new Error(`TMDB Error: ${response.status}`);
+  }
+
+  const data = await response.json();
+  const randomIndex = Math.floor(Math.random() * data.results.length);
+  return data.results?.[randomIndex] || null;
 };
 
 // latest movies
@@ -48,16 +67,16 @@ export const fetchLatestMovies = async () => {
 export const fetchMovieById = async (movieId) => {
   try {
     const response = await fetch(
-    `${TMDB_BASE_URL}/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}`
-  );
+      `${TMDB_BASE_URL}/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}`,
+    );
 
-  if (!response.ok) {
-    throw new Error(`TMDB Error: ${response.status}`);
-  }
+    if (!response.ok) {
+      throw new Error(`TMDB Error: ${response.status}`);
+    }
 
-  return response.json();
+    return response.json();
   } catch (error) {
-    console.error("Error fetching movie:", error.message)
+    console.error("Error fetching movie:", error.message);
   }
 };
 

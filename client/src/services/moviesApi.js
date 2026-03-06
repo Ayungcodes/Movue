@@ -2,8 +2,17 @@ const BASE_URL = "http://127.0.0.1:5000/api/movies";
 console.log("Movies API Base URL:", BASE_URL);
 
 export const getLatestMovies = async () => {
-  const res = await fetch(`${BASE_URL}/latest`);
-  return res.json();
+  try {
+    const res = await fetch(`${BASE_URL}/latest`);
+
+    if (!res.ok) {
+      throw new Error(`Server Error: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error(error.message);
+  }
 };
 
 export const getTrendingMovies = async () => {

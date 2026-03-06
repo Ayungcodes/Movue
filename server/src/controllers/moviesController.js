@@ -7,8 +7,18 @@ import {
   fetchDiscoverMovies,
   fetchMovieProviders,
   fetchMovieById,
-  fetchMovieVideos
+  fetchMovieVideos,
+  fetchFeaturedMovie,
 } from "../services/tmdbServices.js";
+
+export const getFeaturedMovie = async (req, res) => {
+  try {
+    const movie = await fetchFeaturedMovie();
+    res.json(movie);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch featured movie" });
+  }
+};
 
 export const getMovieTrailer = async (req, res) => {
   try {

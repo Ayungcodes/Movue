@@ -8,7 +8,8 @@ import {
   getDiscoverMovies,
   getMovieProviders,
   getMovieById,
-  getMovieTrailer
+  getMovieTrailer,
+  getFeaturedMovie
 } from "../controllers/moviesController.js";
 
 const router = express.Router();
@@ -19,6 +20,7 @@ router.get("/search", searchMovies);
 router.get("/top-rated", getTopRatedMovies);
 router.get("/upcoming", getUpcomingMovies);
 router.get("/discover", getDiscoverMovies);
+router.get("/featured", getFeaturedMovie);
 
 router.get("/:id/trailer", getMovieTrailer);
 router.get("/:id/providers", getMovieProviders);
