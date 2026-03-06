@@ -1,6 +1,28 @@
 const TMDB_BASE_URL =
   process.env.TMDB_BASE_URL || "https://api.themoviedb.org/3";
 
+  // fetch videos
+  export const fetchMovieVideos = async (movieId) => {
+  const response = await fetch(
+    `${TMDB_BASE_URL}/movie/${movieId}/videos?api_key=${process.env.TMDB_API_KEY}`
+  );
+
+  if (!response.ok) {
+    throw new Error(`TMDB Error: ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  // official trailer
+  const trailer = data.results.find(
+    (vid) =>
+      vid.type === "Trailer" &&
+      vid.site === "YouTube"
+  );
+
+  return trailer || null;
+};
+
 // latest movies
 export const fetchLatestMovies = async () => {
   try {
@@ -19,6 +41,23 @@ export const fetchLatestMovies = async () => {
   } catch (error) {
     console.error("Error fetching latest movies:", error.message);
     throw error;
+  }
+};
+
+// fetch by id
+export const fetchMovieById = async (movieId) => {
+  try {
+    const response = await fetch(
+    `${TMDB_BASE_URL}/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}`
+  );
+
+  if (!response.ok) {
+    throw new Error(`TMDB Error: ${response.status}`);
+  }
+
+  return response.json();
+  } catch (error) {
+    console.error("Error fetching movie:", error.message)
   }
 };
 

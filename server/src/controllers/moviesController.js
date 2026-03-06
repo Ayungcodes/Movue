@@ -6,7 +6,18 @@ import {
   fetchUpcomingMovies,
   fetchDiscoverMovies,
   fetchMovieProviders,
+  fetchMovieById,
+  fetchMovieVideos
 } from "../services/tmdbServices.js";
+
+export const getMovieTrailer = async (req, res) => {
+  try {
+    const trailer = await fetchMovieVideos(req.params.id);
+    res.json(trailer || null);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch trailer" });
+  }
+};
 
 // GET /api/movies/latest
 export const getLatestMovies = async (req, res) => {
@@ -16,6 +27,16 @@ export const getLatestMovies = async (req, res) => {
     res.json(movies);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch latest movies" });
+  }
+};
+
+// GET /api/movies/:id
+export const getMovieById = async (req, res) => {
+  try {
+    const movie = await fetchMovieById(req.params.id);
+    res.json(movie);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch movie details" });
   }
 };
 

@@ -2,13 +2,14 @@ import { NavLink } from "react-router-dom";
 
 const Navbar = ({ openNav, toggleNav }) => {
   return (
-    <nav className="navbar flex items-center justify-between p-4 text-white">
+    <nav className="navbar flex items-center justify-between p-3 md:py-5 md:px-6 text-white">
       {/* logo */}
       <div>
-        {/* <h1 className="text-2xl font-bold">Movue</h1> */}
-        <a href="#" className="cursor-pointer">
-          <img src="/images/logo2.png" alt="logo" className="h-10" />
-        </a>
+        <NavLink to="/" className="cursor-pointer">
+          <h1 className="logo-text text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 bg-clip-text text-transparent">
+            Movue.
+          </h1>
+        </NavLink>
       </div>
       {/* hamburger btn */}
       <button

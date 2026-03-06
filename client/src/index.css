@@ -7,7 +7,7 @@ body {
   min-height: 100vh;
   position: relative;
   z-index: 0;
-  font-family: "Raleway", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 body::before {
@@ -26,4 +26,8 @@ body::before {
   filter: blur(2px);
   transform: scale(1.1);
   z-index: -1;
+}
+
+.logo-text {
+  font-family: "Montserrat";
 }

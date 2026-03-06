@@ -7,29 +7,23 @@ import {
   getUpcomingMovies,
   getDiscoverMovies,
   getMovieProviders,
+  getMovieById,
+  getMovieTrailer
 } from "../controllers/moviesController.js";
 
 const router = express.Router();
 
-// GET /api/movies/latest
 router.get("/latest", getLatestMovies);
-
-// GET /api/movies/trending
 router.get("/trending", getTrendingMovies);
-
-// GET /api/movies/search?query=movieName
 router.get("/search", searchMovies);
-
-// GET /api/movies/top-rated
 router.get("/top-rated", getTopRatedMovies);
-
-// GET /api/movies/upcoming
 router.get("/upcoming", getUpcomingMovies);
-
-// GET /api/movies/discover
 router.get("/discover", getDiscoverMovies);
 
-// GET /api/movies/:id/providers
+router.get("/:id/trailer", getMovieTrailer);
 router.get("/:id/providers", getMovieProviders);
+
+router.get("/:id", getMovieById);
+
 
 export default router;

@@ -4,13 +4,11 @@ import { getLatestMovies } from "../services/moviesApi";
 const HeroSlider = () => {
   const [movies, setMovies] = useState([]);
   const [current, setCurrent] = useState(0);
-//   const [query, setQuery] = useState([]);
+  //   const [query, setQuery] = useState([]);
 
   // fetch latest movies for slider
   useEffect(() => {
-    getLatestMovies()
-      .then(setMovies)
-      .catch(console.error);
+    getLatestMovies().then(setMovies).catch(console.error);
   }, []);
 
   // auto-slide every 5 seconds
@@ -23,11 +21,11 @@ const HeroSlider = () => {
 
   if (!movies.length) return null;
 
-//   const handleSearch = (e) => {
-//     e.preventDefault();
-//     if (!query.trim()) return;
-//     onSearch(query);
-//   };
+  //   const handleSearch = (e) => {
+  //     e.preventDefault();
+  //     if (!query.trim()) return;
+  //     onSearch(query);
+  //   };
 
   return (
     <section className="relative w-full h-[80vh] md:h-[90vh] flex items-center justify-center overflow-hidden">
