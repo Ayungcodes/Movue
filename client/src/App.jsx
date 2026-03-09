@@ -5,6 +5,8 @@ import Homepage from "./pages/Homepage";
 import MovieDetails from "./pages/MovieDetails";
 import TrendingMovies from "./pages/TrendingMovies";
 import NowPlaying from "./pages/NowPlaying";
+import TopRated from "./pages/TopRated";
+import Upcoming from "./pages/Upcoming";
 
 const App = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -30,6 +32,14 @@ const App = () => {
       <Route
         path="/nowPlaying"
         element={<NowPlaying openNav={openNav} toggleNav={toggleNav} />}
+      />
+      <Route
+        path="/topRated"
+        element={<TopRated openNav={openNav} toggleNav={toggleNav} />}
+      />
+      <Route
+        path="/upcoming"
+        element={<Upcoming openNav={openNav} toggleNav={toggleNav} />}
       />
     </Routes>
   );

@@ -169,7 +169,7 @@ const Homepage = ({ openNav, toggleNav }) => {
           ))}
 
           <Link
-            to="/topRates"
+            to="/topRated"
             className="flex-shrink-0 w-40 md:w-52 py-5 h-full flex flex-col items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 rounded-lg border-2 border-dashed border-gray-600 transition group"
           >
             <div className="bg-yellow-500 p-2.5 rounded-full group-hover:scale-110 transition">
@@ -217,7 +217,7 @@ const Homepage = ({ openNav, toggleNav }) => {
           ))}
 
           <Link
-            to="/trending"
+            to="/upcoming"
             className="flex-shrink-0 w-40 md:w-52 py-5 h-full flex flex-col items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 rounded-lg border-2 border-dashed border-gray-600 transition group"
           >
             <div className="bg-yellow-500 p-2.5 rounded-full group-hover:scale-110 transition">
