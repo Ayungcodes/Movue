@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import MovieDetails from "./pages/MovieDetails";
 import TrendingMovies from "./pages/TrendingMovies";
+import NowPlaying from "./pages/NowPlaying";
 
 const App = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -23,8 +24,12 @@ const App = () => {
         element={<MovieDetails openNav={openNav} toggleNav={toggleNav} />}
       />
       <Route
-        path="trending"
+        path="/trending"
         element={<TrendingMovies openNav={openNav} toggleNav={toggleNav} />}
+      />
+      <Route
+        path="/nowPlaying"
+        element={<NowPlaying openNav={openNav} toggleNav={toggleNav} />}
       />
     </Routes>
   );

@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { getTrendingMovies } from "../services/moviesApi";
+import { getLatestMovies } from "../services/moviesApi";
 
 import Navbar from "../components/Navbar";
 import MoviesCard from "../components/MoviesCard";
 
-const TrendingMovies = ({ openNav, toggleNav }) => {
+const NowPlaying = ({ openNav, toggleNav }) => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    getTrendingMovies().then(setMovies).catch(console.error);
+    getLatestMovies().then(setMovies).catch(console.error);
   }, []);
 
   return (
@@ -26,4 +26,4 @@ const TrendingMovies = ({ openNav, toggleNav }) => {
   );
 };
 
-export default TrendingMovies;
+export default NowPlaying;

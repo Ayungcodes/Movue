@@ -54,8 +54,8 @@ const Homepage = ({ openNav, toggleNav }) => {
         <h2 className="text-xl md:text-2xl font-bold font-[Montserrat] text-stone-200 mb-4">
           Trending Movies
         </h2>
-        <div className="flex overflow-x-auto space-x-4 scrollbar-hide">
-          {trendingMovies.slice(0,5).map((movie) => (
+        <div className="flex overflow-x-auto space-x-4 scrollbar-hide items-center">
+          {trendingMovies.slice(0, 5).map((movie) => (
             <Link
               to={`/details/${movie.id}`}
               key={movie.id}
@@ -71,6 +71,29 @@ const Homepage = ({ openNav, toggleNav }) => {
               </div>
             </Link>
           ))}
+
+          <Link
+            to="/trending"
+            className="flex-shrink-0 w-40 md:w-52 py-5 h-full flex flex-col items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 rounded-lg border-2 border-dashed border-gray-600 transition group"
+          >
+            <div className="bg-yellow-500 p-2.5 rounded-full group-hover:scale-110 transition">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-black"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </div>
+            <span className="mt-2 text-stone-300 font-bold">View All</span>
+          </Link>
         </div>
       </section>
 
@@ -79,7 +102,7 @@ const Homepage = ({ openNav, toggleNav }) => {
         <h2 className="text-xl md:text-2xl font-bold font-[Montserrat] text-stone-200 mb-4">
           Now Playing
         </h2>
-        <div className="flex overflow-x-auto space-x-4 scrollbar-hide">
+        <div className="flex items-center overflow-x-auto space-x-4 scrollbar-hide">
           {latestMovies.slice(0, 5).map((movie) => (
             <Link
               to={`/details/${movie.id}`}
@@ -96,6 +119,29 @@ const Homepage = ({ openNav, toggleNav }) => {
               </div>
             </Link>
           ))}
+
+          <Link
+            to="/nowPlaying"
+            className="flex-shrink-0 w-40 md:w-52 py-5 h-full flex flex-col items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 rounded-lg border-2 border-dashed border-gray-600 transition group"
+          >
+            <div className="bg-yellow-500 p-2.5 rounded-full group-hover:scale-110 transition">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-black"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </div>
+            <span className="mt-2 text-stone-300 font-bold">View All</span>
+          </Link>
         </div>
       </section>
 
@@ -104,7 +150,7 @@ const Homepage = ({ openNav, toggleNav }) => {
         <h2 className="text-xl md:text-2xl font-bold font-[Montserrat] text-stone-200 mb-4">
           Top Rated
         </h2>
-        <div className="flex overflow-x-auto space-x-4 scrollbar-hide">
+        <div className="flex items-center overflow-x-auto space-x-4 scrollbar-hide">
           {topMovies.slice(0, 5).map((movie) => (
             <Link
               to={`/details/${movie.id}`}
@@ -121,6 +167,29 @@ const Homepage = ({ openNav, toggleNav }) => {
               </div>
             </Link>
           ))}
+
+          <Link
+            to="/topRates"
+            className="flex-shrink-0 w-40 md:w-52 py-5 h-full flex flex-col items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 rounded-lg border-2 border-dashed border-gray-600 transition group"
+          >
+            <div className="bg-yellow-500 p-2.5 rounded-full group-hover:scale-110 transition">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-black"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </div>
+            <span className="mt-2 text-stone-300 font-bold">View All</span>
+          </Link>
         </div>
       </section>
 
@@ -129,7 +198,7 @@ const Homepage = ({ openNav, toggleNav }) => {
         <h2 className="text-xl md:text-2xl font-bold font-[Montserrat] text-stone-200 mb-4">
           Upcoming
         </h2>
-        <div className="flex overflow-x-auto space-x-4 scrollbar-hide">
+        <div className="flex items-center overflow-x-auto space-x-4 scrollbar-hide">
           {upcomingMovies.slice(0, 5).map((movie) => (
             <Link
               to={`/details/${movie.id}`}
@@ -146,6 +215,29 @@ const Homepage = ({ openNav, toggleNav }) => {
               </div>
             </Link>
           ))}
+
+          <Link
+            to="/trending"
+            className="flex-shrink-0 w-40 md:w-52 py-5 h-full flex flex-col items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 rounded-lg border-2 border-dashed border-gray-600 transition group"
+          >
+            <div className="bg-yellow-500 p-2.5 rounded-full group-hover:scale-110 transition">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-black"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </div>
+            <span className="mt-2 text-stone-300 font-bold">View All</span>
+          </Link>
         </div>
       </section>
 
