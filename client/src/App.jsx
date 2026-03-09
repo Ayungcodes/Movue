@@ -7,6 +7,7 @@ import TrendingMovies from "./pages/TrendingMovies";
 import NowPlaying from "./pages/NowPlaying";
 import TopRated from "./pages/TopRated";
 import Upcoming from "./pages/Upcoming";
+import GenrePage from "./pages/GenrePage";
 
 const App = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -40,6 +41,10 @@ const App = () => {
       <Route
         path="/upcoming"
         element={<Upcoming openNav={openNav} toggleNav={toggleNav} />}
+      />
+      <Route
+        path="/genre/:genre"
+        element={<GenrePage openNav={openNav} toggleNav={toggleNav} />}
       />
     </Routes>
   );

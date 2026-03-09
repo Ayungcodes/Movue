@@ -16,7 +16,7 @@ const TrendingMovies = ({ openNav, toggleNav }) => {
       {/* navbar */}
       <Navbar openNav={openNav} toggleNav={toggleNav} />
 
-      {/* movies card */}
+      {/* movies grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         {movies.map((movie) => (
           <MoviesCard key={movie.id} movie={movie} />

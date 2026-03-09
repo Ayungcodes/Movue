@@ -1,6 +1,23 @@
 import { NavLink } from "react-router-dom";
 
+import { useState } from "react";
+
 const Navbar = ({ openNav, toggleNav }) => {
+  const [isGenreOpen, setIsGenreOpen] = useState(false);
+
+  const genres = [
+    "Action",
+    "Adventure",
+    "Animation",
+    "Comedy",
+    "Crime",
+    "Drama",
+    "Family",
+    "Fantasy",
+    "Sci-Fi",
+    "Thriller",
+    "Horror",
+  ];
   return (
     <nav className="navbar flex items-center justify-between p-3 md:py-5 md:px-6 text-white">
       {/* logo */}
@@ -45,46 +62,90 @@ const Navbar = ({ openNav, toggleNav }) => {
         />
       </button>
 
+      {/* mobile menu */}
       <div
-        className={`fixed top-0 right-0 w-[65%] md:w-[55%] h-screen z-50 bg-blue-900/80 backdrop-blur-sm transition-all duration-500 ease-out
-    ${openNav ? "translate-x-0" : "translate-x-full shadow-lg"}`}
+        className={`fixed top-0 right-0 w-[75%] md:w-[55%] h-screen z-50
+  bg-slate-900/95 backdrop-blur-xl border-l border-white/10
+  transition-transform duration-500 ease-out
+  ${openNav ? "translate-x-0" : "translate-x-full"}`}
       >
-        <div>
-          <ul className="flex flex-col justify-center h-full gap-8 md:gap-9 mt-24 md:mt-32 mx-6 text-stone-100 text-[16px] md:text-[18px] font-semibold">
-            <li>
-              <NavLink
-                to="/"
-                onClick={toggleNav}
-                className="hover:text-blue-200 transition-colors duration-300 cursor-pointer"
+        <div className="px-6 pt-24">
+          <ul className="flex flex-col gap-6 text-stone-200 text-lg font-medium">
+            <NavLink
+              to="/"
+              onClick={toggleNav}
+              className="flex items-center gap-3 hover:text-yellow-400 transition"
+            >
+              🏠 Discover
+            </NavLink>
+
+            <NavLink
+              onClick={toggleNav}
+              className="flex items-center gap-3 hover:text-yellow-400 transition"
+            >
+              🤖 AI Recommend
+            </NavLink>
+
+            <NavLink
+              to="/trending"
+              onClick={toggleNav}
+              className="flex items-center gap-3 hover:text-yellow-400 transition"
+            >
+              🔥 Trending
+            </NavLink>
+
+            <NavLink
+              onClick={toggleNav}
+              className="flex items-center gap-3 hover:text-yellow-400 transition"
+            >
+              ❤️ Watchlist
+            </NavLink>
+
+            {/* GENRES ACCORDION */}
+            <div className="border-t border-white/10 pt-4">
+              <button
+                onClick={() => setIsGenreOpen(!isGenreOpen)}
+                className="flex items-center justify-between w-full text-left hover:text-yellow-400 transition"
               >
-                🏠 Discover
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                onClick={toggleNav}
-                className="hover:text-blue-200 transition-colors duration-300 cursor-pointer"
+                <span>🎬 Browse Genres</span>
+
+                <svg
+                  className={`w-4 h-4 transition-transform ${
+                    isGenreOpen ? "rotate-180" : ""
+                  }`}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+
+              <div
+                className={`grid transition-all duration-300 overflow-hidden ${
+                  isGenreOpen ? "grid-rows-[1fr] mt-4" : "grid-rows-[0fr]"
+                }`}
               >
-                🤖 AI Recommend
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-              to="trending"
-                onClick={toggleNav}
-                className="hover:text-blue-200 transition-colors duration-300 cursor-pointer"
-              >
-                🔥 Trending
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                onClick={toggleNav}
-                className="hover:text-blue-200 transition-colors duration-300 cursor-pointer"
-              >
-                ❤️ Watchlist
-              </NavLink>
-            </li>
+                <div className="overflow-hidden grid grid-cols-2 gap-3 text-sm">
+                  {genres.map((genre) => (
+                    <NavLink
+                      key={genre}
+                      to={`/genre/${genre.toLowerCase()}`}
+                      onClick={toggleNav}
+                      className="bg-white/5 hover:bg-yellow-500 hover:text-black
+                px-3 py-2 rounded-lg text-center transition"
+                    >
+                      {genre}
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
+            </div>
           </ul>
         </div>
       </div>

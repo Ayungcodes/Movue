@@ -10,7 +10,6 @@ import {
 } from "../services/moviesApi";
 import { Link } from "react-router-dom";
 import FeaturedMovie from "../components/FeaturedMovie";
-import BrowseByGenre from "../components/BrowseByGenre";
 
 const Homepage = ({ openNav, toggleNav }) => {
   // trending movies
@@ -245,7 +244,6 @@ const Homepage = ({ openNav, toggleNav }) => {
       <FeaturedMovie />
 
       {/* browser by genre */}
-      <BrowseByGenre />
     </>
   );
 };
