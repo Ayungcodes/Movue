@@ -70,6 +70,7 @@ const Navbar = ({ openNav, toggleNav }) => {
             </li>
             <li>
               <NavLink
+              to="trending"
                 onClick={toggleNav}
                 className="hover:text-blue-200 transition-colors duration-300 cursor-pointer"
               >

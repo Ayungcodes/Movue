@@ -55,7 +55,7 @@ const Homepage = ({ openNav, toggleNav }) => {
           Trending Movies
         </h2>
         <div className="flex overflow-x-auto space-x-4 scrollbar-hide">
-          {trendingMovies.map((movie) => (
+          {trendingMovies.slice(0,5).map((movie) => (
             <Link
               to={`/details/${movie.id}`}
               key={movie.id}
@@ -80,7 +80,7 @@ const Homepage = ({ openNav, toggleNav }) => {
           Now Playing
         </h2>
         <div className="flex overflow-x-auto space-x-4 scrollbar-hide">
-          {latestMovies.map((movie) => (
+          {latestMovies.slice(0, 5).map((movie) => (
             <Link
               to={`/details/${movie.id}`}
               key={movie.id}
@@ -105,7 +105,7 @@ const Homepage = ({ openNav, toggleNav }) => {
           Top Rated
         </h2>
         <div className="flex overflow-x-auto space-x-4 scrollbar-hide">
-          {topMovies.map((movie) => (
+          {topMovies.slice(0, 5).map((movie) => (
             <Link
               to={`/details/${movie.id}`}
               key={movie.id}
@@ -130,7 +130,7 @@ const Homepage = ({ openNav, toggleNav }) => {
           Upcoming
         </h2>
         <div className="flex overflow-x-auto space-x-4 scrollbar-hide">
-          {upcomingMovies.map((movie) => (
+          {upcomingMovies.slice(0, 5).map((movie) => (
             <Link
               to={`/details/${movie.id}`}
               key={movie.id}
