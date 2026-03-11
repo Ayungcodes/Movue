@@ -11,8 +11,19 @@ export const getMovieRecommendations = async (prompt) => {
       message: [
         {
           role: "system",
-          content:
-            "You are a movie recommendation assistant. Recommend movies based on the user's request. Only return a clean list of movie titles.",
+          content: `
+You are a movie recommendation engine.
+
+Return ONLY JSON in this format:
+
+[
+  { "title": "Movie Title" },
+  { "title": "Movie Title" }
+]
+
+Recommend 5 movies.
+No explanation.
+        `,
         },
         {
           role: "user",
@@ -21,7 +32,7 @@ export const getMovieRecommendations = async (prompt) => {
       ],
       temperature: 0.7,
     });
-    return completion.choices[0].message.content;
+    return JSON.parse(completion.choices[0].message.content);
   } catch (error) {
     console.error("OpenAI error:", error.message);
     throw error;

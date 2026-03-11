@@ -8,6 +8,7 @@ import NowPlaying from "./pages/NowPlaying";
 import TopRated from "./pages/TopRated";
 import Upcoming from "./pages/Upcoming";
 import GenrePage from "./pages/GenrePage";
+import AIRecommend from "./pages/AIRecommend";
 
 const App = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -46,6 +47,8 @@ const App = () => {
         path="/genre/:genre"
         element={<GenrePage openNav={openNav} toggleNav={toggleNav} />}
       />
+      <Route path="/ai"
+      element={<AIRecommend openNav={openNav} toggleNav={toggleNav} />} />
     </Routes>
   );
 };

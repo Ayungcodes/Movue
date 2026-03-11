@@ -80,6 +80,7 @@ const Navbar = ({ openNav, toggleNav }) => {
             </NavLink>
 
             <NavLink
+              to="/ai"
               onClick={toggleNav}
               className="flex items-center gap-3 hover:text-yellow-400 transition"
             >
