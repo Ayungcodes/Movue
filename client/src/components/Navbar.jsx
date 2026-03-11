@@ -101,7 +101,7 @@ const Navbar = ({ openNav, toggleNav }) => {
               ❤️ Watchlist
             </NavLink>
 
-            {/* GENRES ACCORDION */}
+            {/* genre */}
             <div className="border-t border-white/10 pt-4">
               <button
                 onClick={() => setIsGenreOpen(!isGenreOpen)}

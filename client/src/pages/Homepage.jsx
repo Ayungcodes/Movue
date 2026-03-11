@@ -11,6 +11,20 @@ import {
 import { Link } from "react-router-dom";
 import FeaturedMovie from "../components/FeaturedMovie";
 
+const genres = [
+  "Action",
+  "Adventure",
+  "Animation",
+  "Comedy",
+  "Crime",
+  "Drama",
+  "Fantasy",
+  "Horror",
+  "Sci-Fi",
+  "Thriller",
+];
+
+
 const Homepage = ({ openNav, toggleNav }) => {
   // trending movies
   const [trendingMovies, setTrendingMovies] = useState([]);
@@ -244,6 +258,44 @@ const Homepage = ({ openNav, toggleNav }) => {
       <FeaturedMovie />
 
       {/* browser by genre */}
+      <section className="max-w-7xl mx-auto px-6 py-16">
+  
+  <div className="mb-8">
+    <h2 className="text-3xl md:text-4xl font-bold text-white">
+      Browse By Genre
+    </h2>
+    <p className="text-gray-400 mt-2">
+      Discover movies based on your favorite genre
+    </p>
+  </div>
+
+  <div className="flex flex-wrap gap-4">
+    {genres.map((genre) => (
+      <Link
+        key={genre}
+        to={`/genre/${genre.toLowerCase()}`}
+        className="
+        px-6 py-3
+        bg-white/5
+        border border-white/10
+        text-white
+        rounded-xl
+        backdrop-blur-md
+        hover:bg-yellow-500
+        hover:text-black
+        hover:scale-105
+        transition
+        duration-300
+        font-medium
+        shadow-lg
+        "
+      >
+        {genre}
+      </Link>
+    ))}
+  </div>
+
+</section>
     </>
   );
 };
