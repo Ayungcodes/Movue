@@ -10,6 +10,7 @@ import {
 } from "../services/moviesApi";
 import { Link } from "react-router-dom";
 import FeaturedMovie from "../components/FeaturedMovie";
+import Footer from "../components/Footer";
 
 const genres = [
   "Action",
@@ -23,7 +24,6 @@ const genres = [
   "Sci-Fi",
   "Thriller",
 ];
-
 
 const Homepage = ({ openNav, toggleNav }) => {
   // trending movies
@@ -259,22 +259,21 @@ const Homepage = ({ openNav, toggleNav }) => {
 
       {/* browser by genre */}
       <section className="max-w-7xl mx-auto px-6 py-16">
-  
-  <div className="mb-8">
-    <h2 className="text-3xl md:text-4xl font-bold text-white">
-      Browse By Genre
-    </h2>
-    <p className="text-gray-400 mt-2">
-      Discover movies based on your favorite genre
-    </p>
-  </div>
+        <div className="mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">
+            Browse By Genre
+          </h2>
+          <p className="text-gray-400 mt-2">
+            Discover movies based on your favorite genre
+          </p>
+        </div>
 
-  <div className="flex flex-wrap gap-4">
-    {genres.map((genre) => (
-      <Link
-        key={genre}
-        to={`/genre/${genre.toLowerCase()}`}
-        className="
+        <div className="flex flex-wrap gap-4">
+          {genres.map((genre) => (
+            <Link
+              key={genre}
+              to={`/genre/${genre.toLowerCase()}`}
+              className="
         px-6 py-3
         bg-white/5
         border border-white/10
@@ -289,13 +288,14 @@ const Homepage = ({ openNav, toggleNav }) => {
         font-medium
         shadow-lg
         "
-      >
-        {genre}
-      </Link>
-    ))}
-  </div>
-
-</section>
+            >
+              {genre}
+            </Link>
+          ))}
+        </div>
+      </section>
+      {/* footer */}
+      <Footer />
     </>
   );
 };

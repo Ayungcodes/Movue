@@ -3,6 +3,7 @@ import { getTrendingMovies } from "../services/moviesApi";
 
 import Navbar from "../components/Navbar";
 import MoviesCard from "../components/MoviesCard";
+import Footer from "../components/Footer";
 
 const TrendingMovies = ({ openNav, toggleNav }) => {
   const [movies, setMovies] = useState([]);
@@ -22,6 +23,8 @@ const TrendingMovies = ({ openNav, toggleNav }) => {
           <MoviesCard key={movie.id} movie={movie} />
         ))}
       </div>
+      {/* footer */}
+      <Footer />
     </>
   );
 };

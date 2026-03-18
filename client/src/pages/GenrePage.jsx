@@ -4,6 +4,7 @@ import { getDiscoverMovies } from "../services/moviesApi";
 
 import Navbar from "../components/Navbar";
 import MoviesCard from "../components/MoviesCard";
+import Footer from "../components/Footer";
 
 const genreMap = {
   action: 28,
@@ -70,6 +71,8 @@ const GenrePage = ({ openNav, toggleNav }) => {
           <MoviesCard key={movie.id} movie={movie} />
         ))}
       </div>
+      {/* footer */}
+      <Footer />
     </>
   );
 };

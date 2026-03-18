@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const MovieDetails = ({ openNav, toggleNav }) => {
   const [movie, setMovie] = useState(null);
@@ -182,6 +183,8 @@ const MovieDetails = ({ openNav, toggleNav }) => {
           </div>
         </div>
       )}
+      {/* footer */}
+      <Footer />
     </>
   );
 };

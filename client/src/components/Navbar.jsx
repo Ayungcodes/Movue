@@ -19,7 +19,7 @@ const Navbar = ({ openNav, toggleNav }) => {
     "Horror",
   ];
   return (
-    <nav className="navbar flex items-center justify-between p-3 md:py-5 md:px-6 text-white">
+    <nav className="navbar w-screen h-[10vh] flex items-center justify-between p-3 md:py-5 md:px-6 text-white z-50">
       {/* logo */}
       <div>
         <NavLink to="/" className="cursor-pointer">
@@ -95,12 +95,12 @@ const Navbar = ({ openNav, toggleNav }) => {
               🔥 Trending
             </NavLink>
 
-            <NavLink
+            {/* <NavLink
               onClick={toggleNav}
               className="flex items-center gap-3 hover:text-yellow-400 transition"
             >
               ❤️ Watchlist
-            </NavLink>
+            </NavLink> */}
 
             {/* genre */}
             <div className="border-t border-white/10 pt-4">

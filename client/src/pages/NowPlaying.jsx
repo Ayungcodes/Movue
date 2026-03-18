@@ -3,6 +3,7 @@ import { getLatestMovies } from "../services/moviesApi";
 
 import Navbar from "../components/Navbar";
 import MoviesCard from "../components/MoviesCard";
+import Footer from "../components/Footer";
 
 const NowPlaying = ({ openNav, toggleNav }) => {
   const [movies, setMovies] = useState([]);
@@ -22,6 +23,8 @@ const NowPlaying = ({ openNav, toggleNav }) => {
           <MoviesCard key={movie.id} movie={movie} />
         ))}
       </div>
+      {/* footer */}
+      <Footer />
     </>
   );
 };

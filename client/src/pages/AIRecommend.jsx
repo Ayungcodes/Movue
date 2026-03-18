@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import MoviesCard from "../components/MoviesCard";
+// eslint-disable-next-line
 import { motion } from "framer-motion";
+import Footer from "../components/Footer";
 
 const AIRecommend = ({ openNav, toggleNav }) => {
   const [prompt, setPrompt] = useState("");
@@ -24,7 +26,7 @@ const AIRecommend = ({ openNav, toggleNav }) => {
       });
 
       if (!res.ok) {
-        throw new Error("Request failed")
+        throw new Error("Request failed");
       }
 
       const data = await res.json();
@@ -32,7 +34,7 @@ const AIRecommend = ({ openNav, toggleNav }) => {
       setTimeout(() => {
         setMovies(data);
         setLoading(false);
-        console.log(data)
+        console.log(data);
       }, 1200);
     } catch (error) {
       console.error(error);
@@ -53,7 +55,6 @@ const AIRecommend = ({ openNav, toggleNav }) => {
       <Navbar openNav={openNav} toggleNav={toggleNav} />
 
       <div className="max-w-6xl mx-auto px-6 py-16">
-
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold text-white mb-2">
             🤖 AI Movie Concierge
@@ -65,7 +66,6 @@ const AIRecommend = ({ openNav, toggleNav }) => {
         </div>
 
         <div className="flex flex-col md:flex-row gap-4 mb-6">
-
           <input
             type="text"
             placeholder="e.g. mind bending sci-fi movies with crazy plot twists"
@@ -80,7 +80,6 @@ const AIRecommend = ({ openNav, toggleNav }) => {
           >
             Recommend
           </button>
-
         </div>
 
         <div className="flex flex-wrap gap-3 mb-10 justify-center">
@@ -106,7 +105,6 @@ const AIRecommend = ({ openNav, toggleNav }) => {
         )}
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-
           {movies.map((movie, index) => (
             <motion.div
               key={movie.id}
@@ -117,9 +115,11 @@ const AIRecommend = ({ openNav, toggleNav }) => {
               <MoviesCard movie={movie} />
             </motion.div>
           ))}
-
         </div>
       </div>
+
+      {/* footer */}
+      <Footer />
     </>
   );
 };
