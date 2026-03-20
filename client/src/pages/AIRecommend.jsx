@@ -10,6 +10,10 @@ const AIRecommend = ({ openNav, toggleNav }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+
+
+
   const handleRecommend = async () => {
     if (!prompt.trim()) return;
 
@@ -17,7 +21,7 @@ const AIRecommend = ({ openNav, toggleNav }) => {
     setMovies([]);
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/ai/recommend", {
+      const res = await fetch(`${BASE_URL}/api/ai/recommend`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

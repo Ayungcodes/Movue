@@ -14,10 +14,10 @@ const MovieDetails = ({ openNav, toggleNav }) => {
   const { id } = useParams();
 
   const getMovieById = async () => {
-    const BASE_URL = "http://127.0.0.1:5000/api/movies";
+    const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
 
     try {
-      const res = await fetch(`${BASE_URL}/${id}`);
+      const res = await fetch(`${BASE_URL}/api/movies/${id}`);
       // console.log("Movie status:", res.status);
 
       if (!res.ok) {
@@ -27,7 +27,7 @@ const MovieDetails = ({ openNav, toggleNav }) => {
       const data = await res.json();
       setMovie(data);
 
-      const trailerRes = await fetch(`${BASE_URL}/${id}/trailer`);
+      const trailerRes = await fetch(`${BASE_URL}/api/movies/${id}/trailer`);
 
       if (trailerRes.ok) {
         const trailerData = await trailerRes.json();
@@ -36,7 +36,7 @@ const MovieDetails = ({ openNav, toggleNav }) => {
         setTrailer(null);
       }
 
-      const providerRes = await fetch(`${BASE_URL}/${id}/providers`);
+      const providerRes = await fetch(`${BASE_URL}/api/movies/${id}/providers`);
 
       if (providerRes.ok) {
         const providerData = await providerRes.json();

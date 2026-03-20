@@ -1,9 +1,8 @@
-const BASE_URL = "http://127.0.0.1:5000/api/movies";
-console.log("Movies API Base URL:", BASE_URL);
+const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
 
 export const getLatestMovies = async () => {
   try {
-    const res = await fetch(`${BASE_URL}/latest`);
+    const res = await fetch(`${BASE_URL}/api/movies/latest`);
 
     if (!res.ok) {
       throw new Error(`Server Error: ${res.status} ${res.statusText}`);
@@ -18,7 +17,7 @@ export const getLatestMovies = async () => {
 
 export const getTrendingMovies = async () => {
   try {
-    const res = await fetch(`${BASE_URL}/trending`);
+    const res = await fetch(`${BASE_URL}/api/movies/trending`);
 
     if (!res.ok) {
       throw new Error(`Server Error: ${res.status} ${res.statusText}`);
@@ -34,7 +33,7 @@ export const getTrendingMovies = async () => {
 export const searchMovies = async (query) => {
   try {
     const res = await fetch(
-      `${BASE_URL}/search?query=${encodeURIComponent(query)}`,
+      `${BASE_URL}/api/movies/search?query=${encodeURIComponent(query)}`,
     );
 
     if (!res.ok) {
@@ -50,7 +49,7 @@ export const searchMovies = async (query) => {
 
 export const getTopRatedMovies = async () => {
   try {
-    const res = await fetch(`${BASE_URL}/top-rated`);
+    const res = await fetch(`${BASE_URL}/api/movies/top-rated`);
 
     if (!res.ok) {
       throw new Error(`Server Error: ${res.status} ${res.statusText}`);
@@ -65,7 +64,7 @@ export const getTopRatedMovies = async () => {
 
 export const getUpcomingMovies = async () => {
   try {
-    const res = await fetch(`${BASE_URL}/upcoming`);
+    const res = await fetch(`${BASE_URL}/api/movies/upcoming`);
 
     if (!res.ok) {
       throw new Error(`Server Error: ${res.status} ${res.statusText}`);
@@ -81,7 +80,7 @@ export const getUpcomingMovies = async () => {
 export const getDiscoverMovies = async (filters) => {
   try {
     const query = new URLSearchParams(filters).toString();
-    const res = await fetch(`${BASE_URL}/discover?${query}`);
+    const res = await fetch(`${BASE_URL}/api/movies/discover?${query}`);
 
     if (!res.ok) {
       throw new Error(`Server Error: ${res.status} ${res.statusText}`);
@@ -96,7 +95,7 @@ export const getDiscoverMovies = async (filters) => {
 
 export const getMovieProviders = async (movieId) => {
   try {
-    const res = await fetch(`${BASE_URL}/${movieId}/providers`);
+    const res = await fetch(`${BASE_URL}/${movieId}/api/movies/providers`);
 
     if (!res.ok) {
       throw new Error(`Server Error: ${res.status} ${res.statusText}`);
