@@ -3,22 +3,22 @@ import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 
 const MovieDetails = ({ openNav, toggleNav }) => {
   const [movie, setMovie] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [providers, setProviders] = useState(null);
   const [showTrailer, setShowTrailer] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
-
-  console.log("Movie ID:", id);
 
   const getMovieById = async () => {
     const BASE_URL = "http://127.0.0.1:5000/api/movies";
 
     try {
       const res = await fetch(`${BASE_URL}/${id}`);
-      console.log("Movie status:", res.status);
+      // console.log("Movie status:", res.status);
 
       if (!res.ok) {
         throw new Error("Movie not found");
@@ -46,12 +46,23 @@ const MovieDetails = ({ openNav, toggleNav }) => {
       }
     } catch (error) {
       console.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     getMovieById();
   }, [id]);
+
+  if (loading) {
+    return (
+      <>
+        <Navbar openNav={openNav} toggleNav={toggleNav} />
+        <Loader />
+      </>
+    );
+  }
 
   if (!movie) {
     return (

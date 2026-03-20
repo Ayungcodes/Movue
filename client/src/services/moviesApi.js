@@ -9,9 +9,10 @@ export const getLatestMovies = async () => {
       throw new Error(`Server Error: ${res.status} ${res.statusText}`);
     }
 
-    return res.json();
+    return { data: await res.json(), error: null };
   } catch (error) {
-    console.error(error.message);
+    console.error("Failed to fetch latest movies:", error.message);
+    return { data: null, error: error.message };
   }
 };
 
@@ -23,10 +24,10 @@ export const getTrendingMovies = async () => {
       throw new Error(`Server Error: ${res.status} ${res.statusText}`);
     }
 
-    return res.json();
+    return { data: await res.json(), error: null };
   } catch (error) {
-    console.error(error.message);
-    return [];
+    console.error("Failed to fetch trending movies:", error.message);
+    return { data: null, error: error.message };
   }
 };
 
@@ -55,10 +56,10 @@ export const getTopRatedMovies = async () => {
       throw new Error(`Server Error: ${res.status} ${res.statusText}`);
     }
 
-    return res.json();
+    return { data: await res.json(), error: null };
   } catch (error) {
-    console.error(error.message);
-    throw error;
+    console.error("Failed to fetch top rated movies:", error.message);
+    return { data: null, error: error.message };
   }
 };
 
@@ -70,10 +71,10 @@ export const getUpcomingMovies = async () => {
       throw new Error(`Server Error: ${res.status} ${res.statusText}`);
     }
 
-    return res.json();
+    return { data: await res.json(), error: null };
   } catch (error) {
     console.error(error.message);
-    throw error;
+    return { data: null, error: error.message };
   }
 };
 
@@ -86,10 +87,10 @@ export const getDiscoverMovies = async (filters) => {
       throw new Error(`Server Error: ${res.status} ${res.statusText}`);
     }
 
-    return res.json();
+    return { data: await res.json(), error: null };
   } catch (error) {
     console.error(error.message);
-    throw error;
+    return { data: null, error: error.message };
   }
 };
 
@@ -101,9 +102,9 @@ export const getMovieProviders = async (movieId) => {
       throw new Error(`Server Error: ${res.status} ${res.statusText}`);
     }
 
-    return res.json();
+    return { data: await res.json(), error: null };
   } catch (error) {
     console.error(error.message);
-    throw error;
+    return { data: null, error: error.message };
   }
 };

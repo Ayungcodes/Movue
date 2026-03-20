@@ -3,12 +3,19 @@ import { getLatestMovies } from "../services/moviesApi";
 
 const HeroSlider = () => {
   const [movies, setMovies] = useState([]);
+  const [error, setError] = useState([]);
   const [current, setCurrent] = useState(0);
   //   const [query, setQuery] = useState([]);
 
   // fetch latest movies for slider
   useEffect(() => {
-    getLatestMovies().then(setMovies).catch(console.error);
+    getLatestMovies().then(({ data, error }) => {
+      if (error) {
+        setError("Couldn't load latest movies. Please try again.");
+        return;
+      }
+      setMovies(data);
+    });
   }, []);
 
   // auto-slide every 5 seconds
@@ -26,6 +33,10 @@ const HeroSlider = () => {
   //     if (!query.trim()) return;
   //     onSearch(query);
   //   };
+
+  if (error) {
+    <p className="text-red-400 text-center">{error}</p>;
+  }
 
   return (
     <section className="relative w-full h-[80vh] md:h-[90vh] flex items-center justify-center overflow-hidden">

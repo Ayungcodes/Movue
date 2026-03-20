@@ -5,6 +5,7 @@ import { getDiscoverMovies } from "../services/moviesApi";
 import Navbar from "../components/Navbar";
 import MoviesCard from "../components/MoviesCard";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 
 const genreMap = {
   action: 28,
@@ -29,6 +30,14 @@ const GenrePage = ({ openNav, toggleNav }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [movies]);
+
+  useEffect(() => {
     const fetchGenreMovies = async () => {
       setLoading(true);
 
@@ -51,28 +60,32 @@ const GenrePage = ({ openNav, toggleNav }) => {
     }
   }, [genreId]);
 
-  if (loading) {
-    return <p className="text-white text-center mt-10">Loading movies...</p>;
-  }
-
   return (
     <>
       {/* navbar */}
       <Navbar openNav={openNav} toggleNav={toggleNav} />
 
       {/* page title */}
-      <h1 className="text-white text-3xl font-bold px-6 mt-10 capitalize">
-        {genre} Movies
-      </h1>
 
       {/* movies grid */}
-      <div className="px-6 mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-        {movies.map((movie) => (
-          <MoviesCard key={movie.id} movie={movie} />
-        ))}
+      <div>
+        {loading ? (
+          <Loader />
+        ) : (
+          <div>
+            <h1 className="text-white text-3xl font-bold px-6 mt-10 capitalize">
+              {genre} Movies
+            </h1>
+            <div className="px-6 mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {movies.map((movie) => (
+                <MoviesCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+            <Footer />
+          </div>
+        )}
       </div>
       {/* footer */}
-      <Footer />
     </>
   );
 };
