@@ -27,6 +27,7 @@ const GenrePage = ({ openNav, toggleNav }) => {
   const genreId = genreMap[genre];
 
   const [movies, setMovies] = useState([]);
+  const [moviesError, setMoviesError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -41,18 +42,21 @@ const GenrePage = ({ openNav, toggleNav }) => {
     const fetchGenreMovies = async () => {
       setLoading(true);
 
-      try {
-        const data = await getDiscoverMovies({
-          with_genres: genreId,
-          sort_by: "popularity.desc",
-        });
+      const { data, error } = await getDiscoverMovies({
+        with_genres: genreId,
+        sort_by: "popularity.desc",
+      });
 
-        setMovies(data);
-      } catch (err) {
-        console.error("Error fetching genre movies:", err.message);
-      } finally {
+      if (error) {
+        setMoviesError(
+          "Couldn't load movies for this genre. Please try again.",
+        );
         setLoading(false);
+        return;
       }
+
+      setMovies(data);
+      setLoading(false);
     };
 
     if (genreId) {
@@ -64,23 +68,27 @@ const GenrePage = ({ openNav, toggleNav }) => {
     <>
       {/* navbar */}
       <Navbar openNav={openNav} toggleNav={toggleNav} />
-
-      {/* page title */}
-
       {/* movies grid */}
       <div>
         {loading ? (
           <Loader />
         ) : (
           <div>
-            <h1 className="text-white text-3xl font-bold px-6 mt-10 capitalize">
-              {genre} Movies
-            </h1>
-            <div className="px-6 mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-              {movies.map((movie) => (
-                <MoviesCard key={movie.id} movie={movie} />
-              ))}
-            </div>
+            {moviesError ? (
+              <p className="text-red-400 text-center">{moviesError}</p>
+            ) : (
+              <div>
+                <h1 className="text-white text-3xl font-bold px-6 mt-10 capitalize">
+                  {genre} Movies
+                </h1>
+                <div className="px-6 mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {movies.map((movie) => (
+                    <MoviesCard key={movie.id} movie={movie} />
+                  ))}
+                </div>
+              </div>
+            )}
+
             <Footer />
           </div>
         )}
