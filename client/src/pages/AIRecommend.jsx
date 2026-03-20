@@ -6,13 +6,10 @@ import { motion } from "framer-motion";
 import Footer from "../components/Footer";
 
 const AIRecommend = ({ openNav, toggleNav }) => {
+  const BASE_URL = "https://movue-backend.onrender.com";
   const [prompt, setPrompt] = useState("");
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
-
-
 
   const handleRecommend = async () => {
     if (!prompt.trim()) return;

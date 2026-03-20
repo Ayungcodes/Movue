@@ -14,7 +14,7 @@ const MovieDetails = ({ openNav, toggleNav }) => {
   const { id } = useParams();
 
   const getMovieById = async () => {
-    const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+    const BASE_URL = "https://movue-backend.onrender.com";
 
     try {
       const res = await fetch(`${BASE_URL}/api/movies/${id}`);
