@@ -4,6 +4,7 @@ import { useState } from "react";
 
 const Navbar = ({ openNav, toggleNav }) => {
   const [isGenreOpen, setIsGenreOpen] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
 
   const genres = [
     "Action",
@@ -28,6 +29,72 @@ const Navbar = ({ openNav, toggleNav }) => {
           </h1>
         </NavLink>
       </div>
+
+      {/* desktop navlinks */}
+      <ul className="flex items-center gap-8 text-stone-200 font-medium">
+        <NavLink to="/" className="hover:text-yellow-400 transition">
+          🏠 Discover
+        </NavLink>
+
+        <NavLink to="/ai" className="hover:text-yellow-400 transition">
+          🤖 AI Recommend
+        </NavLink>
+
+        <NavLink to="/trending" className="hover:text-yellow-400 transition">
+          🔥 Trending
+        </NavLink>
+
+        {/* genre dropdown */}
+        <div
+          className="relative"
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
+          <button className="flex items-center gap-2 hover:text-yellow-400 transition">
+            🎬 Browse Genres
+            <svg
+              className={`w-4 h-4 transition-transform ${
+                isHovering ? "rotate-180" : ""
+              }`}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          {/* dropdown */}
+          <div
+            className={`absolute right-0 mt-4 w-[300px] p-4 rounded-xl
+  bg-slate-900/95 backdrop-blur-xl border border-white/10 shadow-xl
+  transition-all duration-300 z-50 ${
+    isHovering
+      ? "opacity-100 visible translate-y-0"
+      : "opacity-0 invisible -translate-y-2"
+  }`}
+          >
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              {genres.map((genre) => (
+                <NavLink
+                  key={genre}
+                  to={`/genre/${genre.toLowerCase()}`}
+                  className="bg-white/5 hover:bg-yellow-500 hover:text-black
+        px-3 py-2 rounded-lg text-center transition"
+                >
+                  {genre}
+                </NavLink>
+              ))}
+            </div>
+          </div>
+        </div>
+      </ul>
+
       {/* hamburger btn */}
       <button
         onClick={toggleNav}
