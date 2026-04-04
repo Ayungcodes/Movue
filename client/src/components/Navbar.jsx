@@ -31,7 +31,7 @@ const Navbar = ({ openNav, toggleNav }) => {
       </div>
 
       {/* desktop navlinks */}
-      <ul className="flex items-center gap-8 text-stone-200 font-medium">
+      <ul className="hidden lg:flex items-center gap-8 text-stone-200 font-medium">
         <NavLink to="/" className="hover:text-yellow-400 transition">
           🏠 Discover
         </NavLink>
