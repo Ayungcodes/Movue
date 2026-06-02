@@ -41,6 +41,9 @@ const Homepage = ({ openNav, toggleNav }) => {
   // upcoming movies
   const [upcomingMovies, setUpcomingMovies] = useState([]);
 
+  // image load state
+  const [loadedImages, setLoadedImages] = useState({});
+
   useEffect(() => {
     const fetchAllData = async () => {
       try {
@@ -69,46 +72,121 @@ const Homepage = ({ openNav, toggleNav }) => {
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          {/* navbar */}
-          <Navbar openNav={openNav} toggleNav={toggleNav} />
+      {/* navbar */}
+      <Navbar openNav={openNav} toggleNav={toggleNav} />
 
-          {/* hero section */}
-          <HeroSlider />
+      {/* hero section */}
+      <HeroSlider />
 
-          {/* trending movies */}
-          <section className="my-6 px-4 md:px-6">
-            <h2 className="text-xl md:text-2xl font-bold font-[Montserrat] text-stone-200 mb-4">
-              Trending Movies
-            </h2>
-            <div className="overflow-x-auto scrollbar-hide">
-              <div className="flex space-x-4 py-2 items-center">
-                {loading
-                  ? Array.from({ length: 7 }).map((_, i) => (
-                      <MovieCardSkeleton key={i} />
-                    ))
-                  : trendingMovies.slice(0, 7).map((movie) => (
-                      <Link
-                        to={`/details/${movie.id}`}
-                        key={movie.id}
-                        className="flex-shrink-0 w-40 md:w-52 lg:w-52 bg-gray-800 rounded-lg cursor-pointer hover:scale-105 transform transition duration-300"
+      {/* trending movies */}
+      <section className="my-6 px-4 md:px-6 scrollbar-hide">
+        {loading ? (
+          <div className="h-8 w-48 bg-zinc-700 animate-pulse rounded mb-4 scrollbar-hide" />
+        ) : (
+          <h2 className="text-xl md:text-2xl font-bold font-[Montserrat] text-stone-200 mb-4">
+            Trending Movies
+          </h2>
+        )}
+
+        <div className="overflow-x-auto scrollbar-hide">
+          <div className="flex space-x-4 py-2 items-center">
+            {loading
+              ? Array.from({ length: 7 }).map((_, i) => (
+                  <MovieCardSkeleton key={i} />
+                ))
+              : trendingMovies.slice(0, 10).map((movie) => (
+                    <Link
+                      to={`/details/${movie.id}`}
+                      key={movie.id}
+                      className="flex-shrink-0 w-40 md:w-52 lg:w-52 relative"
+                    >
+                      {!loadedImages[movie.id] && (
+                        <div className="absolute inset-0">
+                          <MovieCardSkeleton />
+                        </div>
+                      )}
+
+                      <div
+                        className={`bg-gray-800 rounded-lg overflow-hidden transition-opacity duration-300 ${
+                          loadedImages[movie.id] ? "opacity-100" : "opacity-0"
+                        }`}
                       >
                         <img
                           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                           alt={movie.title}
+                          onLoad={() =>
+                            setLoadedImages((prev) => ({
+                              ...prev,
+                              [movie.id]: true,
+                            }))
+                          }
                           className="w-full h-auto object-cover"
                         />
+
                         <div className="p-2 text-stone-300 text-sm md:text-base font-semibold">
                           {movie.title}
                         </div>
-                      </Link>
-                    ))}
+                      </div>
+                    </Link>
+                ))}
+          </div>
+        </div>
+      </section>
 
-                <Link
-                  to="/trending"
+      {/* latest playing */}
+      <section className="my-6 px-4 md:px-6 scrollbar-hide">
+        {loading ? (
+          <div className="h-8 w-48 bg-zinc-700 animate-pulse rounded mb-4 scrollbar-hide" />
+        ) : (
+          <h2 className="text-xl md:text-2xl font-bold font-[Montserrat] text-stone-200 mb-4">
+            Latest Movies
+          </h2>
+        )}
+
+        <div className="overflow-x-auto scrollbar-hide">
+          <div className="flex space-x-4 py-2 items-center">
+            {loading
+              ? Array.from({ length: 7 }).map((_, i) => (
+                  <MovieCardSkeleton key={i} />
+                ))
+              : latestMovies.slice(0, 10).map((movie) => (
+                  <Link
+                    to={`/details/${movie.id}`}
+                    key={movie.id}
+                    className="flex-shrink-0 w-40 md:w-52 lg:w-52 relative"
+                  >
+                    {!loadedImages[movie.id] && (
+                      <div className="absolute inset-0">
+                        <MovieCardSkeleton />
+                      </div>
+                    )}
+
+                    <div
+                      className={`bg-gray-800 rounded-lg overflow-hidden transition-opacity duration-300 ${
+                        loadedImages[movie.id] ? "opacity-100" : "opacity-0"
+                      }`}
+                    >
+                      <img
+                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                        alt={movie.title}
+                        onLoad={() =>
+                          setLoadedImages((prev) => ({
+                            ...prev,
+                            [movie.id]: true,
+                          }))
+                        }
+                        className="w-full h-auto object-cover"
+                      />
+
+                      <div className="p-2 text-stone-300 text-sm md:text-base font-semibold">
+                        {movie.title}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+
+            {/* <Link
+                  to="/latest"
                   className="flex-shrink-0 w-40 md:w-52 py-5 h-full flex flex-col items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 rounded-lg border-2 border-dashed border-gray-600 transition group"
                 >
                   <div className="bg-yellow-500 p-2.5 rounded-full group-hover:scale-110 transition">
@@ -130,179 +208,191 @@ const Homepage = ({ openNav, toggleNav }) => {
                   <span className="mt-2 text-stone-300 font-bold">
                     View All
                   </span>
-                </Link>
-              </div>
-            </div>
-          </section>
+                </Link> */}
+          </div>
+        </div>
+      </section>
 
-          {/* latest playing */}
-          <section className="my-6 px-4 md:px-6">
-            <h2 className="text-xl md:text-2xl font-bold font-[Montserrat] text-stone-200 mb-4">
-              Now Playing
-            </h2>
-            <div className="flex items-center overflow-x-auto space-x-4 scrollbar-hide">
-              {loading
-                ? Array.from({ length: 7 }).map((_, i) => (
-                    <MovieCardSkeleton key={i} />
-                  ))
-                : latestMovies.slice(0, 5).map((movie) => (
-                    <Link
-                      to={`/details/${movie.id}`}
-                      key={movie.id}
-                      className="flex-shrink-0 w-40 md:w-52 lg:w-52 bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:scale-105 transform transition duration-300"
+      {/* top rated movies */}
+      <section className="my-6 px-4 md:px-6 scrollbar-hide">
+        {loading ? (
+          <div className="h-8 w-48 bg-zinc-700 animate-pulse rounded mb-4 scrollbar-hide" />
+        ) : (
+          <h2 className="text-xl md:text-2xl font-bold font-[Montserrat] text-stone-200 mb-4">
+            Top Rated Movies
+          </h2>
+        )}
+
+        <div className="overflow-x-auto scrollbar-hide">
+          <div className="flex space-x-4 py-2 items-center">
+            {loading
+              ? Array.from({ length: 7 }).map((_, i) => (
+                  <MovieCardSkeleton key={i} />
+                ))
+              : topMovies.slice(0, 10).map((movie) => (
+                  <Link
+                    to={`/details/${movie.id}`}
+                    key={movie.id}
+                    className="flex-shrink-0 w-40 md:w-52 lg:w-52 relative"
+                  >
+                    {!loadedImages[movie.id] && (
+                      <div className="absolute inset-0">
+                        <MovieCardSkeleton />
+                      </div>
+                    )}
+
+                    <div
+                      className={`bg-gray-800 rounded-lg overflow-hidden transition-opacity duration-300 ${
+                        loadedImages[movie.id] ? "opacity-100" : "opacity-0"
+                      }`}
                     >
                       <img
                         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                         alt={movie.title}
+                        onLoad={() =>
+                          setLoadedImages((prev) => ({
+                            ...prev,
+                            [movie.id]: true,
+                          }))
+                        }
                         className="w-full h-auto object-cover"
                       />
+
                       <div className="p-2 text-stone-300 text-sm md:text-base font-semibold">
                         {movie.title}
                       </div>
-                    </Link>
-                  ))}
+                    </div>
+                  </Link>
+                ))}
 
-              <Link
-                to="/nowPlaying"
-                className="flex-shrink-0 w-40 md:w-52 py-5 h-full flex flex-col items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 rounded-lg border-2 border-dashed border-gray-600 transition group"
-              >
-                <div className="bg-yellow-500 p-2.5 rounded-full group-hover:scale-110 transition">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-black"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </div>
-                <span className="mt-2 text-stone-300 font-bold">View All</span>
-              </Link>
-            </div>
-          </section>
-
-          {/* top rated movies */}
-          <section className="my-6 px-4 md:px-6">
-            <h2 className="text-xl md:text-2xl font-bold font-[Montserrat] text-stone-200 mb-4">
-              Top Rated
-            </h2>
-            <div className="flex items-center overflow-x-auto space-x-4 scrollbar-hide">
-              {topMovies.slice(0, 5).map((movie) => (
-                <Link
-                  to={`/details/${movie.id}`}
-                  key={movie.id}
-                  className="flex-shrink-0 w-40 md:w-52 lg:w-52 bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:scale-105 transform transition duration-300"
+            {/* <Link
+                  to="/top-rated"
+                  className="flex-shrink-0 w-40 md:w-52 py-5 h-full flex flex-col items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 rounded-lg border-2 border-dashed border-gray-600 transition group"
                 >
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.title}
-                    className="w-full h-auto object-cover"
-                  />
-                  <div className="p-2 text-stone-300 text-sm md:text-base font-semibold">
-                    {movie.title}
+                  <div className="bg-yellow-500 p-2.5 rounded-full group-hover:scale-110 transition">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-black"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </svg>
                   </div>
-                </Link>
-              ))}
+                  <span className="mt-2 text-stone-300 font-bold">
+                    View All
+                  </span>
+                </Link> */}
+          </div>
+        </div>
+      </section>
 
-              <Link
-                to="/topRated"
-                className="flex-shrink-0 w-40 md:w-52 py-5 h-full flex flex-col items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 rounded-lg border-2 border-dashed border-gray-600 transition group"
-              >
-                <div className="bg-yellow-500 p-2.5 rounded-full group-hover:scale-110 transition">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-black"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+      {/* upcoming movies */}
+      <section className="my-6 px-4 md:px-6 scrollbar-hide">
+        {loading ? (
+          <div className="h-8 w-48 bg-zinc-700 animate-pulse rounded mb-4 scrollbar-hide" />
+        ) : (
+          <h2 className="text-xl md:text-2xl font-bold font-[Montserrat] text-stone-200 mb-4">
+            Upcoming Movies
+          </h2>
+        )}
+
+        <div className="overflow-x-auto scrollbar-hide">
+          <div className="flex space-x-4 py-2 items-center">
+            {loading
+              ? Array.from({ length: 7 }).map((_, i) => (
+                  <MovieCardSkeleton key={i} />
+                ))
+              : upcomingMovies.slice(0, 10).map((movie) => (
+                  <Link
+                    to={`/details/${movie.id}`}
+                    key={movie.id}
+                    className="flex-shrink-0 w-40 md:w-52 lg:w-52 relative"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </div>
-                <span className="mt-2 text-stone-300 font-bold">View All</span>
-              </Link>
-            </div>
-          </section>
+                    {!loadedImages[movie.id] && (
+                      <div className="absolute inset-0">
+                        <MovieCardSkeleton />
+                      </div>
+                    )}
 
-          {/* upcoming movies */}
-          <section className="my-6 px-4 md:px-6">
-            <h2 className="text-xl md:text-2xl font-bold font-[Montserrat] text-stone-200 mb-4">
-              Upcoming
-            </h2>
-            <div className="flex items-center overflow-x-auto space-x-4 scrollbar-hide">
-              {upcomingMovies.slice(0, 5).map((movie) => (
-                <Link
-                  to={`/details/${movie.id}`}
-                  key={movie.id}
-                  className="flex-shrink-0 w-40 md:w-52 lg:w-52 bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:scale-105 transform transition duration-300"
+                    <div
+                      className={`bg-gray-800 rounded-lg overflow-hidden transition-opacity duration-300 ${
+                        loadedImages[movie.id] ? "opacity-100" : "opacity-0"
+                      }`}
+                    >
+                      <img
+                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                        alt={movie.title}
+                        onLoad={() =>
+                          setLoadedImages((prev) => ({
+                            ...prev,
+                            [movie.id]: true,
+                          }))
+                        }
+                        className="w-full h-auto object-cover"
+                      />
+
+                      <div className="p-2 text-stone-300 text-sm md:text-base font-semibold">
+                        {movie.title}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+
+            {/* <Link
+                  to="/upcoming"
+                  className="flex-shrink-0 w-40 md:w-52 py-5 h-full flex flex-col items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 rounded-lg border-2 border-dashed border-gray-600 transition group"
                 >
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.title}
-                    className="w-full h-auto object-cover"
-                  />
-                  <div className="p-2 text-stone-300 text-sm md:text-base font-semibold">
-                    {movie.title}
+                  <div className="bg-yellow-500 p-2.5 rounded-full group-hover:scale-110 transition">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-black"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </svg>
                   </div>
-                </Link>
-              ))}
+                  <span className="mt-2 text-stone-300 font-bold">
+                    View All
+                  </span>
+                </Link> */}
+          </div>
+        </div>
+      </section>
 
-              <Link
-                to="/upcoming"
-                className="flex-shrink-0 w-40 md:w-52 py-5 h-full flex flex-col items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 rounded-lg border-2 border-dashed border-gray-600 transition group"
-              >
-                <div className="bg-yellow-500 p-2.5 rounded-full group-hover:scale-110 transition">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-black"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </div>
-                <span className="mt-2 text-stone-300 font-bold">View All</span>
-              </Link>
-            </div>
-          </section>
+      {/* featured movie */}
+      <FeaturedMovie />
 
-          {/* featured movie */}
-          <FeaturedMovie />
+      {/* browser by genre */}
+      <section className="max-w-7xl mx-auto px-6 py-16">
+        <div className="mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">
+            Browse By Genre
+          </h2>
+          <p className="text-gray-400 mt-2">
+            Discover movies based on your favorite genre
+          </p>
+        </div>
 
-          {/* browser by genre */}
-          <section className="max-w-7xl mx-auto px-6 py-16">
-            <div className="mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">
-                Browse By Genre
-              </h2>
-              <p className="text-gray-400 mt-2">
-                Discover movies based on your favorite genre
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-4">
-              {genres.map((genre) => (
-                <Link
-                  key={genre}
-                  to={`/genre/${genre.toLowerCase()}`}
-                  className="
+        <div className="flex flex-wrap gap-4">
+          {genres.map((genre) => (
+            <Link
+              key={genre}
+              to={`/genre/${genre.toLowerCase()}`}
+              className="
         px-6 py-3
         bg-white/5
         border border-white/10
@@ -317,16 +407,14 @@ const Homepage = ({ openNav, toggleNav }) => {
         font-medium
         shadow-lg
         "
-                >
-                  {genre}
-                </Link>
-              ))}
-            </div>
-          </section>
-          {/* footer */}
-          <Footer />
-        </>
-      )}
+            >
+              {genre}
+            </Link>
+          ))}
+        </div>
+      </section>
+      {/* footer */}
+      <Footer />
     </>
   );
 };
