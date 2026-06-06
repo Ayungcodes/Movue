@@ -2,6 +2,7 @@
   "name": "movue",
   "version": "1.0.0",
   "dependencies": {
+    "@supabase/supabase-js": "^2.107.0",
     "concurrently": "^9.2.1"
   },
   "scripts": {

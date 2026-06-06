@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { UseAuth } from "./context/AuthContext";
 
 import Homepage from "./pages/Homepage";
 import MovieDetails from "./pages/MovieDetails";
@@ -9,6 +10,8 @@ import TopRated from "./pages/TopRated";
 import Upcoming from "./pages/Upcoming";
 import GenrePage from "./pages/GenrePage";
 import AIRecommend from "./pages/AIRecommend";
+import Watchlist from "./pages/Watchlist";
+import Login from "./pages/Login";
 
 const App = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -16,6 +19,8 @@ const App = () => {
   const toggleNav = () => {
     setOpenNav((prev) => !prev);
   };
+
+  const { user } = UseAuth();
 
   return (
     <Routes>
@@ -47,8 +52,18 @@ const App = () => {
         path="/genre/:genre"
         element={<GenrePage openNav={openNav} toggleNav={toggleNav} />}
       />
-      <Route path="/ai"
-      element={<AIRecommend openNav={openNav} toggleNav={toggleNav} />} />
+      <Route
+        path="/ai"
+        element={<AIRecommend openNav={openNav} toggleNav={toggleNav} />}
+      />
+      <Route
+        path="/watchlist"
+        element={<Watchlist openNav={openNav} toggleNav={toggleNav} />}
+      />
+      <Route
+        path="/login"
+        element={<Login openNav={openNav} toggleNav={toggleNav} />}
+      />
     </Routes>
   );
 };

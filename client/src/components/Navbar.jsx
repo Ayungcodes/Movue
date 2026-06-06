@@ -43,6 +43,9 @@ const Navbar = ({ openNav, toggleNav }) => {
         <NavLink to="/trending" className="hover:text-yellow-400 transition">
           🔥 Trending
         </NavLink>
+        <NavLink to="/watchlist" className="hover:text-yellow-400 transition">
+          📋 Watchlist
+        </NavLink>
 
         {/* genre dropdown */}
         <div
@@ -162,12 +165,20 @@ const Navbar = ({ openNav, toggleNav }) => {
               🔥 Trending
             </NavLink>
 
-            {/* <NavLink
+            <NavLink
+              to="/watchlist"
               onClick={toggleNav}
               className="flex items-center gap-3 hover:text-yellow-400 transition"
             >
-              ❤️ Watchlist
-            </NavLink> */}
+              📋 Watchlist
+            </NavLink>
+            <NavLink
+              to="/login"
+              onClick={toggleNav}
+              className="flex items-center gap-3 hover:text-yellow-400 transition"
+            >
+              🚪 Login / Signup
+            </NavLink>
 
             {/* genre */}
             <div className="border-t border-white/10 pt-4">
