@@ -12,6 +12,7 @@ import GenrePage from "./pages/GenrePage";
 import AIRecommend from "./pages/AIRecommend";
 import Watchlist from "./pages/Watchlist";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 const App = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -19,8 +20,6 @@ const App = () => {
   const toggleNav = () => {
     setOpenNav((prev) => !prev);
   };
-
-  const { user } = UseAuth();
 
   return (
     <Routes>
@@ -63,6 +62,10 @@ const App = () => {
       <Route
         path="/login"
         element={<Login openNav={openNav} toggleNav={toggleNav} />}
+      />
+      <Route
+        path="/signup"
+        element={<Signup openNav={openNav} toggleNav={toggleNav} />}
       />
     </Routes>
   );
