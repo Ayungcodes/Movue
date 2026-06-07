@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { supabase } from "../lib/superbase";
+import { supabase } from "../lib/supabase";
 
 const AuthContext = createContext();
 
@@ -33,10 +33,15 @@ export function AuthProvider({ children }) {
     };
   }, []);
 
-  const signUp = async (email, password) => {
+  const signUp = async (email, password, name) => {
     return await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          name: name,
+        },
+      },
     });
   };
 

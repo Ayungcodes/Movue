@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { UseAuth } from "./context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 import Homepage from "./pages/Homepage";
 import MovieDetails from "./pages/MovieDetails";
@@ -15,6 +16,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
 const App = () => {
+  const { user } = UseAuth();
   const [openNav, setOpenNav] = useState(false);
 
   const toggleNav = () => {
@@ -57,8 +59,15 @@ const App = () => {
       />
       <Route
         path="/watchlist"
-        element={<Watchlist openNav={openNav} toggleNav={toggleNav} />}
+        element={
+          user ? (
+            <Watchlist openNav={openNav} toggleNav={toggleNav} />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
       />
+
       <Route
         path="/login"
         element={<Login openNav={openNav} toggleNav={toggleNav} />}

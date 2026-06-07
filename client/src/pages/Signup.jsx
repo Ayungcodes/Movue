@@ -5,6 +5,7 @@ import { UseAuth } from "../context/AuthContext";
 const Signup = () => {
   const { signUp } = UseAuth();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -20,7 +21,7 @@ const Signup = () => {
 
     setLoading(true);
 
-    const { error } = await signUp(email, password);
+    const { error } = await signUp(email, password, name);
 
     if (error) {
       alert(error.message);
@@ -55,6 +56,22 @@ const Signup = () => {
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-5">
+{/* Name */}
+<div>
+              <label className="block text-sm text-gray-400 mb-2">
+                Full Name
+              </label>
+
+              <input
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="John Doe"
+                className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-[#e7e5e4] outline-none focus:border-[#e7e5e4]/50"
+              />
+            </div>
+
             {/* Email */}
             <div>
               <label className="block text-sm text-gray-400 mb-2">

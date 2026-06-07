@@ -1,10 +1,14 @@
 import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { UseAuth } from "../context/AuthContext";
 
 import { useState } from "react";
 
 const Navbar = ({ openNav, toggleNav }) => {
   const [isGenreOpen, setIsGenreOpen] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+
+  const { user, signOut } = UseAuth();
 
   const genres = [
     "Action",
@@ -31,7 +35,7 @@ const Navbar = ({ openNav, toggleNav }) => {
       </div>
 
       {/* desktop navlinks */}
-      <ul className="hidden lg:flex items-center gap-8 text-stone-200 font-medium">
+      <ul className="hidden lg:flex items-center gap-5 text-stone-200 font-medium">
         <NavLink to="/" className="hover:text-yellow-400 transition">
           🏠 Discover
         </NavLink>
@@ -96,6 +100,44 @@ const Navbar = ({ openNav, toggleNav }) => {
             </div>
           </div>
         </div>
+
+        {user ? (
+          <div className="flex items-center gap-3 text-sm font-medium">
+            {/* User Tag */}
+            <span className="text-stone-400 flex items-center gap-1.5 bg-stone-900/60 border border-stone-800/80 px-3 py-1.5 rounded-full select-none">
+              <span className="animate-pulse text-[12px]">🟢</span>
+              <span className="max-w-[140px] truncate md:max-w-xs text-stone-300">
+                {`Hello ${user?.user_metadata?.name?.split(" ")[0] || user?.email || "User"}`}
+              </span>
+            </span>
+
+            {/* Logout Button */}
+            <button
+              onClick={signOut}
+              className="text-stone-400 hover:text-white transition-colors duration-200 cursor-pointer text-sm font-semibold py-1.5 px-3 rounded-lg hover:bg-stone-900"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-3 text-sm font-semibold">
+            {/* Login Link */}
+            <Link
+              to="/login"
+              className="text-stone-300 hover:text-white transition-colors duration-200 px-3 py-1.5"
+            >
+              Login
+            </Link>
+
+            {/* Signup Link (CTA Accent) */}
+            <Link
+              to="/signup"
+              className="bg-yellow-600 text-stone-950 px-4 py-1.5 rounded-full transition-all duration-300 hover:scale-95 hover:bg-white font-bold"
+            >
+              Sign up
+            </Link>
+          </div>
+        )}
       </ul>
 
       {/* hamburger btn */}
@@ -172,13 +214,39 @@ const Navbar = ({ openNav, toggleNav }) => {
             >
               📋 Watchlist
             </NavLink>
-            <NavLink
-              to="/login"
-              onClick={toggleNav}
-              className="flex items-center gap-3 hover:text-yellow-400 transition"
-            >
-              🚪 Login / Signup
-            </NavLink>
+
+            {user ? (
+              <div className="flex items-center gap-4 text-sm font-medium">
+                <span className="text-stone-400 flex items-center gap-1.5 bg-stone-900/60 border border-stone-800/80 px-3 py-1.5 rounded-full select-none">
+                  <span className="animate-pulse text-[12px]">🟢</span>
+                  <span className="max-w-[140px] truncate md:max-w-xs text-stone-300">
+                    {`Hello ${user?.user_metadata?.name?.split(" ")[0] || user?.email || "User"}`}
+                  </span>
+                </span> 
+
+                <button
+                  onClick={signOut}
+                  className="text-stone-400 hover:text-white transition-colors duration-200 cursor-pointer text-sm font-semibold py-1.5 px-3 rounded-lg hover:bg-stone-900"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3 text-sm font-semibold">
+                <Link
+                  to="/login"
+                  className="text-stone-300 hover:text-white transition-colors duration-200 px-3 py-1.5"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/signup"
+                  className="bg-yellow-600 text-stone-950 px-4 py-1.5 rounded-full transition-all duration-300 hover:scale-95 hover:bg-white font-bold"
+                >
+                  Sign up
+                </Link>
+              </div>
+            )}
 
             {/* genre */}
             <div className="border-t border-white/10 pt-4">
