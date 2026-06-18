@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { getTopRatedMovies } from "../services/moviesApi";
+import { getLatestMovies } from "../services/moviesApi";
 
 import Navbar from "../components/Navbar";
 import MoviesCard from "../components/MoviesCard";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 
-const TopRated = ({ openNav, toggleNav }) => {
+const LatestMovies = ({ openNav, toggleNav }) => {
   const [movies, setMovies] = useState([]);
   const [moviesError, setMoviesError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,12 +14,12 @@ const TopRated = ({ openNav, toggleNav }) => {
   useEffect(() => {
     let isMounted = true;
 
-    const fetchTopRated = async () => {
+    const fetchLatest = async () => {
       try {
         setLoading(true);
         setMoviesError(null);
         
-        const { data, error } = await getTopRatedMovies();
+        const { data, error } = await getLatestMovies();
         
         if (error) throw new Error(error);
         
@@ -28,8 +28,8 @@ const TopRated = ({ openNav, toggleNav }) => {
         }
       } catch (err) {
         if (isMounted) {
-          setMoviesError("We couldn't load the top-rated list. Please try again later.");
-          console.error("Top-rated fetch breakdown:", err);
+          setMoviesError("We couldn't load the latest list. Please try again later.");
+          console.error("Latest fetch breakdown:", err);
         }
       } finally {
         if (isMounted) {
@@ -38,7 +38,7 @@ const TopRated = ({ openNav, toggleNav }) => {
       }
     };
 
-    fetchTopRated();
+    fetchLatest();
 
     return () => {
       isMounted = false;
@@ -61,10 +61,10 @@ const TopRated = ({ openNav, toggleNav }) => {
           {/* title banner */}
           <div className="mb-10 border-b border-stone-900 pb-6">
             <h1 className="text-3xl md:text-5xl font-black tracking-tight font-[Montserrat] bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent">
-              🔥 Top Rated
+              🔥 Latest Today
             </h1>
             <p className="text-stone-400 text-sm md:text-base mt-2">
-              The most highly rated movies across global charts right now.
+              The most latest blockbusters and viral releases across global charts right now.
             </p>
           </div>
 
@@ -82,7 +82,7 @@ const TopRated = ({ openNav, toggleNav }) => {
             </div>
           ) : movies.length === 0 ? (
             <div className="text-center py-20 text-stone-500 font-medium">
-              No top-rated titles available at this moment.
+              No latest titles available at this moment.
             </div>
           ) : (
             /* responsive grid */
@@ -103,4 +103,4 @@ const TopRated = ({ openNav, toggleNav }) => {
   );
 };
 
-export default TopRated;
+export default LatestMovies;

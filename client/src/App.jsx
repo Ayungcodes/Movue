@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import MovieDetails from "./pages/MovieDetails";
 import TrendingMovies from "./pages/TrendingMovies";
+import LatestMovies from "./pages/LatestMovies";
 import NowPlaying from "./pages/NowPlaying";
 import TopRated from "./pages/TopRated";
 import Upcoming from "./pages/Upcoming";
@@ -38,11 +39,15 @@ const App = () => {
         element={<TrendingMovies openNav={openNav} toggleNav={toggleNav} />}
       />
       <Route
+        path="/latest"
+        element={<LatestMovies openNav={openNav} toggleNav={toggleNav} />}
+      />
+      <Route
         path="/nowPlaying"
         element={<NowPlaying openNav={openNav} toggleNav={toggleNav} />}
       />
       <Route
-        path="/topRated"
+        path="/top-rated"
         element={<TopRated openNav={openNav} toggleNav={toggleNav} />}
       />
       <Route
