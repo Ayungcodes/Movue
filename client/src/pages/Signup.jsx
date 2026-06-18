@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { UseAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 const Signup = () => {
-  const { signUp } = UseAuth();
+  const { signUp } = useAuth();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

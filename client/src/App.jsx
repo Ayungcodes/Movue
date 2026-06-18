@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { UseAuth } from "./context/AuthContext";
+import { useAuth } from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
 
 import Homepage from "./pages/Homepage";
@@ -16,7 +16,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
 const App = () => {
-  const { user } = UseAuth();
+  const { user } = useAuth();
   const [openNav, setOpenNav] = useState(false);
 
   const toggleNav = () => {

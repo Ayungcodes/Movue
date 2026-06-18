@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { UseAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { supabase } from "../lib/supabase";
 import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
 
 const Watchlist = ({ openNav, toggleNav }) => {
-  const { user } = UseAuth();
+  const { user } = useAuth();
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -323,7 +323,7 @@ const getUserWatchlist = async () => {
             ))}
           </div>
         ) : (
-          /* Empty Conditional Visual Feedback Box State */
+          /* empty conditional */
           <div className="mt-16 rounded-2xl border border-dashed border-white/10 p-12 text-center bg-white/5 backdrop-blur-sm max-w-xl mx-auto">
             <div className="text-4xl mb-4">📂</div>
             <h3 className="text-xl font-semibold text-white">

@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { UseAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 import { supabase } from "../lib/supabase";
 
 const MoviesCard = ({ movie }) => {
-  const { user } = UseAuth();
+  const { user } = useAuth();
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
 
@@ -29,6 +29,7 @@ const MoviesCard = ({ movie }) => {
     }
 
     try {
+      // eslint-disable-next-line
       const { data, error } = await supabase
         .from("watchlists")
         .insert([

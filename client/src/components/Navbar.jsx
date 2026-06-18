@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { UseAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 import { useState } from "react";
 
@@ -8,7 +8,7 @@ const Navbar = ({ openNav, toggleNav }) => {
   const [isGenreOpen, setIsGenreOpen] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
-  const { user, signOut } = UseAuth();
+  const { user, signOut } = useAuth();
 
   const genres = [
     "Action",
@@ -22,7 +22,7 @@ const Navbar = ({ openNav, toggleNav }) => {
     "Sci-Fi",
     "Thriller",
     "Horror",
-  ];
+  ]; 
   return (
     <nav className="navbar w-screen h-[10vh] flex items-center justify-between p-3 md:py-5 md:px-6 text-white z-50">
       {/* logo */}
