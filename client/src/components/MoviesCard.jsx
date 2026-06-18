@@ -1,12 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
 import { supabase } from "../lib/supabase";
+// eslint-disable-next-line
+import { motion, AnimatePresence } from "framer-motion";
 
 const MoviesCard = ({ movie }) => {
   const { user } = useAuth();
   const [showMenu, setShowMenu] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: "", type: "success" });
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -19,6 +21,14 @@ const MoviesCard = ({ movie }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // notification system
+  const triggerToast = (message, type = "success") => {
+    setToast({ show: true, message, type });
+    setTimeout(() => {
+      setToast((prev) => ({ ...prev, show: false }));
+    }, 3000); 
+  };
+
   const handleActionClick = async (e) => {
     e.stopPropagation();
     setShowMenu(false);
@@ -29,8 +39,7 @@ const MoviesCard = ({ movie }) => {
     }
 
     try {
-      // eslint-disable-next-line
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("watchlists")
         .insert([
           {
@@ -43,26 +52,23 @@ const MoviesCard = ({ movie }) => {
             is_watched: false,
             is_favorite: false,
           },
-        ])
-        .select();
+        ]);
 
       if (error) {
         if (error.code === "23505") {
-          alert(`💡 "${movie.title}" is already inside your watchlist!`);
+          triggerToast(`"${movie.title}" is already in your watchlist!`, "info");
           return;
         }
         throw error;
       }
 
-      alert(
-        `🎬 "${movie.title}" has been successfully added to your watchlist!`,
-      );
+      triggerToast(`Added "${movie.title}" to your watchlist!`, "success");
     } catch (error) {
       if (error.message?.includes("unique constraint")) {
-        alert(`💡 "${movie.title}" is already inside your watchlist!`);
+        triggerToast(`"${movie.title}" is already in your watchlist!`, "info");
       } else {
         console.error("Watchlist save error:", error.message);
-        alert(`Could not save movie: ${error.message}`);
+        triggerToast("Could not save movie. Try again.", "error");
       }
     }
   };
@@ -72,6 +78,30 @@ const MoviesCard = ({ movie }) => {
       className="group relative rounded-2xl shadow-lg cursor-pointer bg-stone-900 border border-stone-800/40 select-none z-10 hover:z-30 transition-all duration-200"
       onMouseLeave={() => setShowMenu(false)}
     >
+      {/* animated toast */}
+      <AnimatePresence>
+        {toast.show && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9, y: -5 }}
+            className={`absolute top-4 left-4 right-4 z-50 rounded-xl p-3 text-center text-xs font-bold tracking-wide border shadow-2xl backdrop-blur-md pointer-events-none ${
+              toast.type === "success"
+                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                : toast.type === "info"
+                ? "bg-amber-500/10 text-amber-400 border-amber-500/20"
+                : "bg-red-500/10 text-red-400 border-red-500/20"
+            }`}
+          >
+            {toast.type === "success" && "🍿 "}
+            {toast.type === "info" && "💡 "}
+            {toast.type === "error" && "❌ "}
+            {toast.message}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* action menu */}
       <div className="absolute top-3 right-3 z-40" ref={menuRef}>
         <button
           onClick={(e) => {
@@ -84,6 +114,7 @@ const MoviesCard = ({ movie }) => {
             <path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
           </svg>
         </button>
+
         <div
           className={`absolute right-0 mt-2 w-56 rounded-xl bg-stone-950/95 backdrop-blur-xl border border-stone-850 p-3 shadow-2xl transition-all duration-200 transform origin-top-right z-50 ${
             showMenu
@@ -100,7 +131,6 @@ const MoviesCard = ({ movie }) => {
             </button>
           ) : (
             <div className="flex flex-col gap-3 text-left">
-              {/* Login Flow */}
               <div className="space-y-1">
                 <p className="text-[11px] font-medium text-stone-400 tracking-wide px-1">
                   Want to add this to a watchlist?
@@ -133,6 +163,7 @@ const MoviesCard = ({ movie }) => {
         </div>
       </div>
 
+      {/* poster image */}
       <div className="w-full h-[360px] overflow-hidden rounded-2xl relative z-10">
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -142,6 +173,7 @@ const MoviesCard = ({ movie }) => {
         />
       </div>
 
+      {/* hover info */}
       <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/80 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-5 z-20 rounded-2xl">
         <h3 className="text-white font-bold text-lg mb-1 line-clamp-2 drop-shadow-md">
           {movie.title}

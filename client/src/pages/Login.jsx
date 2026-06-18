@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+// eslint-disable-next-line
+import { motion, AnimatePresence } from "framer-motion";
 
 const Login = () => {
   const { signIn } = useAuth();
@@ -10,100 +11,128 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
+    setErrorMsg(null);
 
-    const { data, error } = await signIn(email, password);
+    try {
+      const { error } = await signIn(email, password);
 
-    console.log("DATA:", data);
-    console.log("ERROR:", error);
-    console.log(import.meta.env.VITE_SUPABASE_URL);
-
-    if (error) {
-      alert(error.message);
-    } else {
-      navigate("/");
+      if (error) {
+        setErrorMsg(error.message);
+      } else {
+        navigate("/");
+      }
+    } catch (err) {
+      setErrorMsg("An unexpected authentication error occurred.");
+      console.error("Auth process error:", err);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
-    <main className="relative min-h-screen bg-[#011a2d] flex items-center justify-center px-6">
-      <div className="w-full max-w-md">
-        {/* Logo / Brand */}
-        <div className="text-center mb-8">
-          <h1 className="text-[#e7e5e4] text-4xl font-bold">🎬 MovieVerse</h1>
+    <main className="relative min-h-screen bg-stone-950 flex items-center justify-center px-4 md:px-6 overflow-hidden">
+      
+      <div className="absolute w-96 h-96 bg-stone-900/40 blur-[120px] rounded-full -top-12 -left-12 pointer-events-none" />
+      <div className="absolute w-96 h-96 bg-yellow-500/5 blur-[150px] rounded-full -bottom-20 -right-20 pointer-events-none" />
 
-          <p className="text-gray-400 mt-2">
-            Welcome back. Continue your movie journey.
+      <div className="w-full max-w-md relative z-10">
+        
+        <div className="text-center mb-8">
+          <motion.h1 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-white text-3xl md:text-4xl font-black tracking-tight font-[Montserrat] bg-gradient-to-r from-stone-100 to-stone-400 bg-clip-text text-transparent"
+          >
+            🎬 MovieVerse
+          </motion.h1>
+          <p className="text-stone-500 text-sm mt-2 font-medium">
+            Welcome back. Continue your cinematic journey.
           </p>
         </div>
 
-        <div className="absolute w-72 h-72 bg-[#e7e5e4]/10 blur-3xl rounded-full top-20 left-20"></div>
-        <div className="absolute w-72 h-72 bg-[#e7e5e4]/5 blur-3xl rounded-full bottom-20 right-20"></div>
-
-        {/* Card */}
-        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 shadow-2xl">
-          <h2 className="text-[#e7e5e4] text-2xl font-semibold mb-6">
-            🔐 Login
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-stone-900/20 backdrop-blur-md border border-stone-900 rounded-3xl p-6 md:p-8 shadow-2xl"
+        >
+          <h2 className="text-stone-200 text-xl font-bold tracking-tight mb-6">
+            Log In
           </h2>
+
+          {/* error message */}
+          <AnimatePresence mode="wait">
+            {errorMsg && (
+              <motion.div
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                className="mb-5 p-3.5 bg-red-500/5 border border-red-500/10 rounded-xl text-center"
+              >
+                <p className="text-xs text-red-400 font-bold tracking-wide">
+                  ⚠️ {errorMsg}
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm text-gray-400 mb-2">
+              <label className="block text-xs font-bold text-stone-500 uppercase tracking-wider mb-2">
                 Email Address
               </label>
-
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-[#e7e5e4] outline-none focus:border-[#e7e5e4]/50"
+                disabled={loading}
+                className="w-full rounded-xl bg-stone-900/50 border border-stone-900 px-4 py-3 text-stone-200 text-sm outline-none focus:border-stone-700 focus:bg-stone-900 transition-all placeholder:text-stone-700 disabled:opacity-50"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-gray-400 mb-2">
+              <label className="block text-xs font-bold text-stone-500 uppercase tracking-wider mb-2">
                 Password
               </label>
-
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-[#e7e5e4] outline-none focus:border-[#e7e5e4]/50"
+                disabled={loading}
+                className="w-full rounded-xl bg-stone-900/50 border border-stone-900 px-4 py-3 text-stone-200 text-sm outline-none focus:border-stone-700 focus:bg-stone-900 transition-all placeholder:text-stone-700 disabled:opacity-50"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-xl bg-[#e7e5e4] text-[#011a2d] py-3 font-semibold transition hover:scale-[1.02] disabled:opacity-50 cursor-pointer"
+              className="w-full rounded-xl bg-white text-stone-950 py-3.5 text-sm font-black transition shadow-md hover:bg-stone-100 disabled:bg-stone-900 disabled:text-stone-600 active:scale-[0.99] cursor-pointer mt-2"
             >
-              {loading ? "Signing In..." : "Login"}
+              {loading ? "Authenticating..." : "Sign In"}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-gray-400">
+          <div className="mt-6 text-center border-t border-stone-900/60 pt-5">
+            <p className="text-sm text-stone-500 font-medium">
               Don't have an account?{" "}
-              <Link to="/signup" className="text-[#e7e5e4] hover:underline">
+              <Link to="/signup" className="text-stone-300 hover:text-white font-bold transition underline underline-offset-4">
                 Sign Up
               </Link>
             </p>
           </div>
-        </div>
+        </motion.div>
 
-        <p className="text-center text-gray-500 text-sm mt-6">
-          Discover. Save. Watch.
+        {/* footer */}
+        <p className="text-center text-stone-600 text-xs tracking-widest uppercase font-bold mt-8">
+          Discover • Save • Watch
         </p>
       </div>
     </main>
