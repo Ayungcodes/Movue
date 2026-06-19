@@ -114,10 +114,7 @@ const Watchlist = ({ openNav, toggleNav }) => {
     }
   };
 
-  const removeFromWatchlist = async (dbRowId, movieTitle) => {
-    if (!window.confirm(`Remove "${movieTitle}" from your watchlist?`)) return;
-
-    // UI optimistic updates
+  const removeFromWatchlist = async (dbRowId) => {
     setMovies((prev) => prev.filter((m) => m.id !== dbRowId));
 
     try {
@@ -129,7 +126,7 @@ const Watchlist = ({ openNav, toggleNav }) => {
       if (error) throw error;
     } catch (error) {
       console.error("Failed deleting row instance:", error.message);
-      getUserWatchlist();
+      getUserWatchlist(); 
     }
   };
 
@@ -336,7 +333,7 @@ const Watchlist = ({ openNav, toggleNav }) => {
                       Details
                     </Link>
                     <button
-                      onClick={() => removeFromWatchlist(movie.id, movie.title)}
+                      onClick={() => removeFromWatchlist(movie.id)}
                       className="rounded-xl border border-stone-900 bg-stone-900/40 px-3 py-2.5 text-xs font-bold text-red-400/80 transition duration-200 hover:bg-red-500/10 hover:border-red-500/20 hover:text-red-400 cursor-pointer active:scale-[0.98]"
                     >
                       Remove
