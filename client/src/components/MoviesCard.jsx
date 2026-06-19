@@ -169,12 +169,11 @@ const MoviesCard = ({ movie }) => {
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
           loading="lazy"
-          className="w-full h-full object-cover transform group-hover:scale-105 transition duration-500"
+          className="w-full h-full object-cover transform md:group-hover:scale-105 transition duration-500"
         />
       </div>
 
-      {/* hover info */}
-      <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/80 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-5 z-20 rounded-2xl">
+      <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/90 to-transparent lg:opacity-0 md:group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-5 z-20 rounded-2xl">
         <h3 className="text-white font-bold text-lg mb-1 line-clamp-2 drop-shadow-md">
           {movie.title}
         </h3>
