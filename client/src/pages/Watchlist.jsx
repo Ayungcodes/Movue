@@ -126,7 +126,7 @@ const Watchlist = ({ openNav, toggleNav }) => {
       if (error) throw error;
     } catch (error) {
       console.error("Failed deleting row instance:", error.message);
-      getUserWatchlist(); 
+      getUserWatchlist();
     }
   };
 
