@@ -16,6 +16,7 @@ import Watchlist from "./pages/Watchlist";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
+
 const App = () => {
   const { user } = useAuth();
   const [openNav, setOpenNav] = useState(false);
