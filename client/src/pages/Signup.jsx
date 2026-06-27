@@ -48,7 +48,7 @@ const Signup = () => {
   };
 
   return (
-    <main className="relative min-h-screen bg-stone-950 flex items-center justify-center px-4 md:px-6 overflow-hidden">
+    <main className="relative min-h-[125vh] md:min-h-screen bg-stone-950 flex items-center justify-center px-4 md:px-6 overflow-hidden">
       
       <div className="absolute w-96 h-96 bg-stone-900/40 blur-[120px] rounded-full -top-12 -left-12 pointer-events-none" />
       <div className="absolute w-96 h-96 bg-yellow-500/5 blur-[150px] rounded-full -bottom-20 -right-20 pointer-events-none" />
