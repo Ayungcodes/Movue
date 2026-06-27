@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 // eslint-disable-next-line
 import { motion, AnimatePresence } from "framer-motion";
 
-const Login = () => {
-  const { signIn } = useAuth();
+const UpdatePassword = () => {
+  const { updatePassword } = useAuth(); 
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -18,17 +18,23 @@ const Login = () => {
     setLoading(true);
     setErrorMsg(null);
 
+    if (password !== confirmPassword) {
+      setErrorMsg("Passwords do not match.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const { error } = await signIn(email, password);
+      const { error } = await updatePassword(password);
 
       if (error) {
         setErrorMsg(error.message);
       } else {
-        navigate("/");
+        navigate("/", { replace: true });
       }
     } catch (err) {
-      setErrorMsg("An unexpected authentication error occurred.");
-      console.error("Auth process error:", err);
+      setErrorMsg("An unexpected error occurred during updates.");
+      console.error("Password update error:", err);
     } finally {
       setLoading(false);
     }
@@ -49,7 +55,7 @@ const Login = () => {
             🎬 MovieVerse
           </motion.h1>
           <p className="text-stone-500 text-sm mt-2 font-medium">
-            Welcome back. Continue your cinematic journey.
+            Create a secure, new password for your account.
           </p>
         </div>
 
@@ -59,7 +65,7 @@ const Login = () => {
           className="bg-stone-900/20 backdrop-blur-md border border-stone-900 rounded-3xl p-6 md:p-8 shadow-2xl"
         >
           <h2 className="text-stone-200 text-xl font-bold tracking-tight mb-6">
-            Log In
+            Update Password
           </h2>
 
           {/* error message */}
@@ -81,35 +87,8 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-xs font-bold text-stone-500 uppercase tracking-wider mb-2">
-                Email Address
+                New Password
               </label>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                disabled={loading}
-                className="w-full rounded-xl bg-stone-900/50 border border-stone-900 px-4 py-3 text-stone-200 text-sm outline-none focus:border-stone-700 focus:bg-stone-900 transition-all placeholder:text-stone-700 disabled:opacity-50"
-              />
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="block text-xs font-bold text-stone-500 uppercase tracking-wider mb-2">
-                Password
-              </label>
-              {/* forgot password */}
-              <p className="text-sm text-stone-500 font-medium">
-                Forgot?{" "}
-                <Link
-                  to="/forgot-password"
-                  className="text-stone-300 hover:text-white font-bold transition underline underline-offset-4" 
-                >
-                  Reset Password
-                </Link>
-              </p>
-              </div>
               <input
                 type="password"
                 required
@@ -121,35 +100,33 @@ const Login = () => {
               />
             </div>
 
+            <div>
+              <label className="block text-xs font-bold text-stone-500 uppercase tracking-wider mb-2">
+                Confirm New Password
+              </label>
+              <input
+                type="password"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="••••••••"
+                disabled={loading}
+                className="w-full rounded-xl bg-stone-900/50 border border-stone-900 px-4 py-3 text-stone-200 text-sm outline-none focus:border-stone-700 focus:bg-stone-900 transition-all placeholder:text-stone-700 disabled:opacity-50"
+              />
+            </div>
+
             <button
               type="submit"
               disabled={loading}
               className="w-full rounded-xl bg-white text-stone-950 py-3.5 text-sm font-black transition shadow-md hover:bg-stone-100 disabled:bg-stone-900 disabled:text-stone-600 active:scale-[0.99] cursor-pointer mt-2"
             >
-              {loading ? "Authenticating..." : "Sign In"}
+              {loading ? "Updating..." : "Save Password"}
             </button>
           </form>
-
-          <div className="mt-6 text-center border-t border-stone-900/60 pt-5">
-            <p className="text-sm text-stone-500 font-medium">
-              Don't have an account?{" "}
-              <Link
-                to="/signup"
-                className="text-stone-300 hover:text-white font-bold transition underline underline-offset-4"
-              >
-                Sign Up
-              </Link>
-            </p>
-          </div>
         </motion.div>
-
-        {/* footer */}
-        <p className="text-center text-stone-600 text-xs tracking-widest uppercase font-bold mt-8">
-          Discover • Save • Watch
-        </p>
       </div>
     </main>
   );
 };
 
-export default Login;
+export default UpdatePassword;

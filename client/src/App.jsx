@@ -15,6 +15,8 @@ import AIRecommend from "./pages/AIRecommend";
 import Watchlist from "./pages/Watchlist";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
+import UpdatePassword from "./pages/UpdatePassword";
 
 
 const App = () => {
@@ -76,11 +78,19 @@ const App = () => {
 
       <Route
         path="/login"
-        element={<Login openNav={openNav} toggleNav={toggleNav} />}
+        element={<Login/>}
       />
       <Route
         path="/signup"
-        element={<Signup openNav={openNav} toggleNav={toggleNav} />}
+        element={<Signup/>}
+      />
+      <Route
+        path="/forgot-password"
+        element={<ForgotPassword/>}
+      />
+      <Route
+        path="/update-password"
+        element={<UpdatePassword/>}
       />
     </Routes>
   );

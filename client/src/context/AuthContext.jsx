@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
 import { supabase } from "../lib/supabase";
 
 const AuthContext = createContext();
@@ -9,7 +8,6 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get current session on page load
     const getSession = async () => {
       const {
         data: { session },
@@ -21,11 +19,14 @@ export function AuthProvider({ children }) {
 
     getSession();
 
-    // Listen for login/logout
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
+      
+      if (event === "PASSWORD_RECOVERY") {
+        console.log("User landed via password recovery link");
+      }
     });
 
     return () => {
@@ -56,6 +57,18 @@ export function AuthProvider({ children }) {
     return await supabase.auth.signOut();
   };
 
+  const resetPasswordEmail = async (email) => {
+    return await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/update-password`,
+    });
+  };
+
+  const updatePassword = async (newPassword) => {
+    return await supabase.auth.updateUser({
+      password: newPassword,
+    });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -64,6 +77,8 @@ export function AuthProvider({ children }) {
         signUp,
         signIn,
         signOut,
+        resetPasswordEmail,
+        updatePassword,
       }}
     >
       {children}
@@ -71,6 +86,7 @@ export function AuthProvider({ children }) {
   );
 }
 
+// eslint-disable-next-line
 export function useAuth() {
   return useContext(AuthContext);
 }
